@@ -55,7 +55,11 @@
     box-shadow: 0 0 50px rgba(161, 140, 209, 1);
   }
 
-  #next-btn { display: none; margin-top: 40px; font-size: 1.2rem; }
+  #next-btn { display: none; margin-top: 40px; font-size: 1.2rem; animation: softBlink 2.8s ease-in-out infinite; }
+  @keyframes softBlink {
+    0%, 100% { opacity: 1; box-shadow: 0 0 25px rgba(161, 140, 209, 0.6); }
+    50% { opacity: 0.55; box-shadow: 0 0 8px rgba(161, 140, 209, 0.2); }
+  }
 
   /* استایل مهناز */
   .butterfly-container {
@@ -195,6 +199,29 @@
     .cake-text-content { font-size: 1.2rem; } .highlight { font-size: 1.4rem; }
   }
 
+
+  /* شمع عددی ۲۲ */
+  .num-candle { position: absolute; left: 70px; bottom: 105px; width: 120px; height: 122px; pointer-events: none; }
+  .num-candle svg { display: block; overflow: visible; }
+  .nc-flame { transform-box: fill-box; transform-origin: 50% 100%; animation: ncFlicker 0.9s infinite ease-in-out;
+    filter: drop-shadow(0 0 5px #ff9a1f) drop-shadow(0 0 12px rgba(255, 110, 0, 0.8)); transition: opacity 0.35s ease; }
+  .nc-flame.d2 { animation-delay: -0.4s; }
+  .nc-flame.off { opacity: 0; animation: none; }
+  .nc-halo { animation: ncHalo 1.4s infinite alternate ease-in-out; }
+  @keyframes ncFlicker {
+    0%   { transform: scale(1, 1) rotate(-2deg); }
+    25%  { transform: scale(0.95, 1.06) rotate(1.5deg); }
+    50%  { transform: scale(1.04, 0.97) rotate(-1deg); }
+    75%  { transform: scale(0.97, 1.05) rotate(2deg); }
+    100% { transform: scale(1, 1) rotate(-2deg); }
+  }
+  @keyframes ncHalo { from { opacity: 0.6; } to { opacity: 1; } }
+  .nc-wick { transition: stroke 0.5s; }
+  .nc-wick.off { stroke: #000; }
+  .nc-smoke { position: absolute; top: 4px; width: 20px; height: 20px; background: rgba(200, 200, 200, 0.6);
+    border-radius: 50%; opacity: 0; filter: blur(4px); pointer-events: none; }
+  .nc-smoke.puff { animation: smokeRise 2.5s forwards; }
+
   /* ماه هلالی درخشان با ستاره‌های متحرک */
   .moon-container {
     display: none;
@@ -303,11 +330,60 @@
       
       <div class="cake-top"></div>
       
-      <div class="candle">
-        <div class="wick" id="wick"></div>
-        <div class="flame" id="flame"></div>
-        <div class="smoke" id="smoke"></div>
-      </div>
+      <div class="num-candle">
+  <svg viewBox="0 -22 120 122" width="120" height="122" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <path id="nc-two" d="M13 26 C13 6 47 6 47 27 C47 46 22 66 12 86 L50 86"/>
+      <linearGradient id="ncWax" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#e6d5c1"/><stop offset="0.4" stop-color="#fffaf2"/>
+        <stop offset="0.7" stop-color="#f5eadb"/><stop offset="1" stop-color="#d8c4ab"/>
+      </linearGradient>
+      <linearGradient id="ncFlame" x1="0" y1="1" x2="0" y2="0">
+        <stop offset="0" stop-color="#ff5a00"/><stop offset="0.5" stop-color="#ffb000"/><stop offset="1" stop-color="#ffe98a"/>
+      </linearGradient>
+      <radialGradient id="ncHalo">
+        <stop offset="0" stop-color="rgba(255,170,60,0.55)"/><stop offset="1" stop-color="rgba(255,120,0,0)"/>
+      </radialGradient>
+    </defs>
+    <ellipse cx="60" cy="88" rx="52" ry="5" fill="rgba(0,0,0,0.35)" style="filter:blur(3px)"/>
+    <g transform="translate(0,0)">
+      <use href="#nc-two" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="16" transform="translate(2.5,3)" style="filter:blur(2px)"/>
+      <use href="#nc-two" fill="none" stroke="#b9a285" stroke-width="15" stroke-linejoin="round"/>
+      <use href="#nc-two" fill="none" stroke="url(#ncWax)" stroke-width="12" stroke-linejoin="round"/>
+      <use href="#nc-two" fill="none" stroke="#d4af37" stroke-width="12" stroke-dasharray="2.5 10" opacity="0.5" stroke-linejoin="round"/>
+      <use href="#nc-two" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2" stroke-linejoin="round" transform="translate(-2.8,-0.5)"/>
+      <ellipse cx="30" cy="5.5" rx="5" ry="1.8" fill="#cdb89c"/>
+      <path class="nc-wick" d="M30 5 Q30.8 -1 29.6 -6" fill="none" stroke="#2a2118" stroke-width="1.5" stroke-linecap="round"/>
+      <g transform="translate(29.6,-5)">
+        <g class="nc-flame">
+          <circle r="20" cy="-13" fill="url(#ncHalo)" class="nc-halo"/>
+          <path d="M0 0 C-7.5 -3 -7.5 -13 0 -28 C7.5 -13 7.5 -3 0 0Z" fill="url(#ncFlame)"/>
+          <path d="M0 -0.5 C-3.2 -2.5 -3.2 -9 0 -15 C3.2 -9 3.2 -2.5 0 -0.5Z" fill="#fff6c8"/>
+          <ellipse cx="0" cy="-2.5" rx="2" ry="2.8" fill="#6fa8ff" opacity="0.7"/>
+        </g>
+      </g>
+    </g>
+    <g transform="translate(60,0)">
+      <use href="#nc-two" fill="none" stroke="rgba(0,0,0,0.4)" stroke-width="16" transform="translate(2.5,3)" style="filter:blur(2px)"/>
+      <use href="#nc-two" fill="none" stroke="#b9a285" stroke-width="15" stroke-linejoin="round"/>
+      <use href="#nc-two" fill="none" stroke="url(#ncWax)" stroke-width="12" stroke-linejoin="round"/>
+      <use href="#nc-two" fill="none" stroke="#d4af37" stroke-width="12" stroke-dasharray="2.5 10" opacity="0.5" stroke-linejoin="round"/>
+      <use href="#nc-two" fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2" stroke-linejoin="round" transform="translate(-2.8,-0.5)"/>
+      <ellipse cx="30" cy="5.5" rx="5" ry="1.8" fill="#cdb89c"/>
+      <path class="nc-wick" d="M30 5 Q30.8 -1 29.6 -6" fill="none" stroke="#2a2118" stroke-width="1.5" stroke-linecap="round"/>
+      <g transform="translate(29.6,-5)">
+        <g class="nc-flame d2">
+          <circle r="20" cy="-13" fill="url(#ncHalo)" class="nc-halo"/>
+          <path d="M0 0 C-7.5 -3 -7.5 -13 0 -28 C7.5 -13 7.5 -3 0 0Z" fill="url(#ncFlame)"/>
+          <path d="M0 -0.5 C-3.2 -2.5 -3.2 -9 0 -15 C3.2 -9 3.2 -2.5 0 -0.5Z" fill="#fff6c8"/>
+          <ellipse cx="0" cy="-2.5" rx="2" ry="2.8" fill="#6fa8ff" opacity="0.7"/>
+        </g>
+      </g>
+    </g>
+  </svg>
+  <div class="nc-smoke" style="left:20px"></div>
+  <div class="nc-smoke" style="left:80px"></div>
+</div>
     </div>
     
     <div class="glass-box">
@@ -434,9 +510,9 @@
       if(isBlown) return;
       isBlown = true;
       
-      document.getElementById('flame').style.display = 'none'; 
-      document.getElementById('wick').classList.add('off');
-      document.getElementById('smoke').classList.add('puff');
+      document.querySelectorAll('.nc-flame').forEach(f => f.classList.add('off'));
+      document.querySelectorAll('.nc-wick').forEach(w => w.classList.add('off'));
+      document.querySelectorAll('.nc-smoke').forEach(s => s.classList.add('puff'));
       
       document.getElementById('disco-lights').style.display = 'block';
       
