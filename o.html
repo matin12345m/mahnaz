@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>سورپرایز شاپرک 🦋</title>
+<title>سورپرایز مهناز 🌙</title>
 <style>
   @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css');
   
@@ -159,8 +159,67 @@
   @media (max-width: 600px) {
     h1 { font-size: 2rem; }
     .subtitle { font-size: 1.1rem; }
-    .butterfly-container { transform: scale(0.7); margin-bottom: 10px; }
+    .moon-container { transform: scale(0.7); margin-bottom: 10px; }
   }
+
+  /* ماه هلالی درخشان با ستاره‌های متحرک */
+  .moon-container {
+    display: none;
+    perspective: 1000px;
+    margin: 0 auto 30px auto;
+    width: 250px;
+    height: 200px;
+    position: relative;
+    transition: transform 0.2s ease-out;
+  }
+  .moon-float {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    animation: floatMoon 4s infinite ease-in-out;
+  }
+  .moon {
+    position: absolute;
+    width: 132px;
+    height: 132px;
+    left: 59px;
+    top: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #fffde7 0%, #fff1a8 24%, #f6c85f 58%, #c98b2e 100%);
+    box-shadow: 0 0 22px #fff0a6, 0 0 50px rgba(255, 215, 110, .85), 0 0 95px rgba(186, 140, 255, .45);
+    overflow: hidden;
+  }
+  .moon::after {
+    content: "";
+    position: absolute;
+    width: 116px;
+    height: 116px;
+    left: 42px;
+    top: -10px;
+    border-radius: 50%;
+    background: #080416;
+    box-shadow: -8px 8px 25px rgba(8, 4, 22, .45);
+  }
+  .moon-star {
+    position: absolute;
+    color: #fff8d6;
+    font-size: 25px;
+    text-shadow: 0 0 10px #ffe89a, 0 0 25px #d6b5ff;
+    animation: twinkle 1.8s infinite alternate ease-in-out;
+  }
+  .moon-star.s1 { top: 20px; left: 28px; font-size: 22px; }
+  .moon-star.s2 { top: 75px; right: 18px; animation-delay: .5s; }
+  .moon-star.s3 { bottom: 18px; left: 72px; font-size: 17px; animation-delay: .9s; }
+  .moon-star.s4 { top: 5px; right: 55px; font-size: 14px; animation-delay: .3s; }
+  @keyframes floatMoon {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-18px) rotate(3deg); }
+  }
+  @keyframes twinkle {
+    from { opacity: .45; transform: scale(.8); }
+    to { opacity: 1; transform: scale(1.2); }
+  }
+
 </style>
 </head>
 <body>
@@ -172,13 +231,13 @@
   <canvas id="canvas"></canvas>
   
   <div id="ui-layer">
-    <button id="start-btn" onclick="startMagic()">برای شاپرک... لمس کن 🦋</button>
+    <button id="start-btn" onclick="startMagic()">برای مهناز... لمس کن 🌙</button>
     
-    <div class="butterfly-container" id="butterfly">
-      <div class="butterfly-float">
-        <div class="wing wing-left"></div>
-        <div class="wing wing-right"></div>
-        <div class="body"></div>
+    <div class="moon-container" id="butterfly">
+      <div class="moon-float">
+        <div class="moon"></div>
+        <span class="moon-star s1">✦</span><span class="moon-star s2">✧</span>
+        <span class="moon-star s3">✦</span><span class="moon-star s4">✧</span>
       </div>
     </div>
     
@@ -283,9 +342,9 @@
         document.getElementById('butterfly').style.display = 'block';
         document.getElementById('message').style.display = 'block';
         
-        typeText("شاپرک زیبای من، تولدت مبارک", "main-text", 120, () => {
+        typeText("مهناز زیبای من، تولدت مبارک", "main-text", 120, () => {
           const sub = document.getElementById('sub-text');
-          sub.innerHTML = "تو مثل این شاپرک، از جنس نوری و تو تاریک‌ترین شب‌ها هم می‌درخشی.<br>آرزو می‌کنم همیشه آزاد، جسور و رها پرواز کنی.";
+          sub.innerHTML = "تو مثل این ماه، از جنس نوری و تو تاریک‌ترین شب‌ها هم می‌درخشی.<br>آرزو می‌کنم همیشه آزاد، جسور و رها پرواز کنی.";
           sub.style.transition = "opacity 2.5s ease-in-out";
           sub.style.opacity = 1;
         });
