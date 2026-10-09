@@ -87,6 +87,7 @@
   }
   @keyframes shineText { to { background-position: 200% center; } }
   @keyframes glowText { from { filter: drop-shadow(0 0 10px rgba(240, 147, 251, 0.3)); } to { filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.8)); } }
+  .emo { -webkit-text-fill-color: initial; display: inline-block; }
   .subtitle { font-size: 1.4rem; line-height: 2; margin-top: 20px; color: #e2e8f0; opacity: 0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.4); }
 
   /* صحنه دوم: کیک تولد شکلاتی */
@@ -315,7 +316,7 @@
       
       <div class="cake-base">
         <!-- این همون نوشته‌ی خامه‌ای و طبیعی روی کیک هست -->
-        <div class="icing-text">تولدت مبارک<br>مهناز</div>
+        <div class="icing-text">تولدت مبارک<br>مهناز جونم</div>
       </div>
       
       <!-- قطره‌های خامه نسکافه‌ای -->
@@ -537,19 +538,20 @@
     }
 
     function typeText(text, id, speed, callback) {
-    let i = 0; let el = document.getElementById(id); el.innerHTML = "";
-    function type() { 
-      if (i < text.length) { 
-        let char = text.charAt(i);
-        // اگر به ستاره رسید بره خط بعدی، در غیر این صورت خود حرف رو تایپ کنه
-        if (char === '*') { el.innerHTML += '<br>'; } 
-        else { el.innerHTML += char; }
-        i++; 
-        setTimeout(type, speed); 
-      } else if (callback) setTimeout(callback, 500); 
+      const chars = Array.from(text); // ایموجی‌ها رو سالم نگه می‌داره
+      let i = 0; let el = document.getElementById(id); el.innerHTML = "";
+      function type() { 
+        if (i < chars.length) { 
+          let char = chars[i];
+          if (char === '*') { el.innerHTML += '<br>'; } 
+          else if (/\p{Extended_Pictographic}/u.test(char)) { el.innerHTML += '<span class="emo">' + char + '</span>'; }
+          else { el.innerHTML += char; }
+          i++; 
+          setTimeout(type, speed); 
+        } else if (callback) setTimeout(callback, 500); 
+      }
+      type();
     }
-    type();
-  }
   </script>
 </body>
 </html>
