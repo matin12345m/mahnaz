@@ -285,7 +285,7 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;tou
 .welcome-1{margin-top:calc(var(--u)*1);font-size:calc(var(--u)*5.2);font-weight:500;line-height:1.7;color:var(--cream);min-height:1.7em}
 .hint{margin-top:calc(var(--u)*2);font-size:calc(var(--u)*3.1);color:rgba(232,201,135,.85);opacity:0}
 
-.zoom-dim{position:absolute;inset:0;z-index:8;background:rgba(20,2,6,.62);opacity:0;pointer-events:none;transition:opacity .5s ease}
+.zoom-dim{position:absolute;inset:0;z-index:8;background:transparent;opacity:0;pointer-events:none;transition:opacity .5s ease}
 #stage.zoomed .zoom-dim{opacity:1;pointer-events:auto}
 
 .replay{position:absolute;left:50%;bottom:calc(3% + var(--safe-b));transform:translateX(-50%);z-index:6;opacity:0;pointer-events:none;
@@ -466,7 +466,7 @@ body.clean .snd,body.clean .replay,body.clean .hint{opacity:0!important;pointer-
       <p class="welcome-1" id="w1"></p>
       <p class="hint" id="hint"></p>
     </div>
-    <button class="replay" id="replayBtn">↻ دوباره از اول</button>
+    <button class="replay" id="replayBtn"></button>
   </section>
 
   <canvas id="fx"></canvas>
@@ -504,7 +504,7 @@ const TXT = {
   m1: "ما هنوز اول راهیم...",
   m2: "ولی خوشحال می‌شیم کنارمون باشی.",
   m3: "اگه ما رو می‌بینی،",
-  m4: "لایک و فالو یادت نره 🥲❤️",
+  m4: "لایک و فالو یادتون نره 🥲❤️",
   brand: "cackloris",
   w1: "به دنیای شیرین ما خوش اومدی ❤️",
   hint: ""
