@@ -141,10 +141,10 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;tou
 /* =====================================================================
    صحنه ۱: شروع (جعبه + کنجکاوی)
    ===================================================================== */
-.brand-top{position:absolute;z-index:2;top:calc(4.5% + var(--safe-t));left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*2.6);opacity:0}
+.brand-top{position:absolute;z-index:2;top:calc(4.5% + var(--safe-t));left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*5.5);opacity:0}
 .seal{position:relative;width:calc(var(--u)*20);height:calc(var(--u)*20);display:grid;place-items:center}
 .logo-ring{position:absolute;inset:-14%;width:128%;height:128%;animation:spin 60s linear infinite;direction:ltr}
-.logo-img{position:relative;width:100%;height:100%;object-fit:contain}
+.logo-img{position:relative;width:100%;height:100%;object-fit:contain; transform: scale(1.45);transform-origin: center;}
 .seal.round .logo-img{border-radius:50%;object-fit:cover;
   box-shadow:0 0 0 calc(var(--u)*.45) var(--gold),0 calc(var(--u)*1.2) calc(var(--u)*3.5) rgba(0,0,0,.35)}
 .logo-fallback{position:relative;width:80%;height:80%;border-radius:50%;display:none;flex-direction:column;align-items:center;justify-content:center;
