@@ -910,6 +910,7 @@ async function sceneCta(){
   await at(10.5); likeHeart();
   await at(11.0); followIt(); pulse($('#ctaBig'), 1.05, 300);
   await at(11.35);
+  await sleep(1500);
   out([$('#ctaBig'), $('#actLike'), $('#actFollow')], 150);
 }
 function likeHeart(){
