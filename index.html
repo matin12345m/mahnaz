@@ -874,7 +874,7 @@ async function sceneOpen(){
 async function sceneShow(){
   await at(6.5);
   setScene('show'); setBg('show'); FX.setAmbient('none');
-  const shots = [...document.querySelectorAll('.shot')], times = [6.5, 8, 9];
+  const shots = [...document.querySelectorAll('.shot')], times = [6.5, 8, 9.5];
   anim($('#shots'), [{opacity:0, transform:'scale(.9)'}, {opacity:1, transform:'none'}], {duration:320});
   for (let k = 0; k < shots.length; k++) {
     await at(times[k]);
@@ -886,8 +886,8 @@ async function sceneShow(){
     anim($('#wipe'), [{opacity:1, transform:'translate3d(-120%,0,0) skewX(-14deg)'}, {opacity:1, transform:'translate3d(560%,0,0) skewX(-14deg)'}], {duration:450, easing:'cubic-bezier(.6,0,.3,1)'});
     if (k === 0) { await at(6.75); go(revealWords($('#showText'), TXT.show, {stagger:60, dur:420})); }
   }
-  await at(8.75); pulse($('#showText'), 1.05, 300);
-  await at(9);
+  await at(10.75); pulse($('#showText'), 1.05, 300);
+  await at(11);
   out([$('#shots'), $('#showText')], 180);
 }
 
