@@ -10,97 +10,91 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" media="print" onload="this.media='all'"
-      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&family=Playfair+Display:ital,wght@1,500;1,600&display=swap">
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@1,500;1,600&display=swap">
 
 <style>
 /* =====================================================================
    برای اجرای کاملاً آفلاین با فونت وزیرمتن:
-   فایل‌های فونت رو کنار index.html بذارید و این بخش رو از کامنت خارج کنید.
-@font-face{font-family:'Vazirmatn';src:url('Vazirmatn-Light.woff2') format('woff2');font-weight:300;font-display:swap}
 @font-face{font-family:'Vazirmatn';src:url('Vazirmatn-Regular.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'Vazirmatn';src:url('Vazirmatn-Bold.woff2') format('woff2');font-weight:700;font-display:swap}
    ===================================================================== */
 
-/* ---------- پالت و متغیرها ---------- */
 :root{
   --burgundy:#800D22; --burgundy-2:#9E1A31; --burgundy-deep:#4A0613;
   --cream:#FFF0D8; --gold:#C99A4A; --gold-l:#E8C987; --milk:#FFFAF2; --brown:#6B4A3A;
   --fa:'Vazirmatn','Vazir','IRANSansX','IRANSans','Estedad','Shabnam','Sahel','Segoe UI',Tahoma,sans-serif;
   --la:'Playfair Display','Didot','Bodoni 72','Bodoni MT',Georgia,'Times New Roman',serif;
-  --u:3.9px;            /* یک درصد عرض صحنه (با JS تنظیم می‌شه) */
-  --sw:100vw; --sh:100vh;
+  --u:3.9px; --sw:100vw; --sh:100vh;
   --ease:cubic-bezier(.22,1,.36,1);
   --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100%;overflow:hidden;background:#1d0409;overscroll-behavior:none}
-body{
-  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:var(--fa);color:var(--burgundy);
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;
-  touch-action:manipulation;
-}
+body{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--fa);color:var(--burgundy);
+  -webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 ::-webkit-scrollbar{display:none}
 button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;touch-action:manipulation}
 .ltr{direction:ltr;unicode-bidi:isolate}
-
 .backdrop{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 40%,#5a0a1a 0%,#2a050c 55%,#120204 100%)}
 
 /* ---------- صحنه اصلی 9:16 ---------- */
-#stage{position:relative;width:var(--sw);height:var(--sh);overflow:hidden;isolation:isolate;contain:layout paint size;
-  box-shadow:0 0 calc(var(--u)*20) rgba(0,0,0,.6)}
+#stage{position:relative;width:var(--sw);height:var(--sh);overflow:hidden;isolation:isolate;contain:layout paint size;box-shadow:0 0 calc(var(--u)*20) rgba(0,0,0,.6)}
 
-/* ---------- پس‌زمینه‌ها (Crossfade فقط با opacity) ---------- */
+/* ---------- پس‌زمینه‌ها (کات سریع) ---------- */
 #bgs{position:absolute;inset:0;z-index:0}
-.bg{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease}
+.bg{position:absolute;inset:0;opacity:0;transition:opacity .35s ease}
 .bg.on{opacity:1}
 #bg-intro{background:radial-gradient(120% 80% at 50% 45%,#a01a33 0%,#800D22 30%,#4A0613 72%,#25030a 100%)}
-#bg-story{background:
-  radial-gradient(70% 40% at 0% 100%,rgba(128,13,34,.22),transparent 70%),
-  radial-gradient(70% 40% at 100% 0%,rgba(128,13,34,.18),transparent 70%),
-  radial-gradient(110% 70% at 50% 45%,#FFFAF2 0%,#FFF0D8 45%,#f3d9b4 80%,#e2b493 100%)}
-#bg-dim{background:radial-gradient(110% 70% at 50% 45%,#f3ebe2 0%,#e3d4c5 50%,#bfa898 100%)}
-#bg-night{background:radial-gradient(100% 70% at 50% 50%,#5c0a1b 0%,#3a0510 55%,#1a0206 100%)}
-#bg-dawn{background:
-  radial-gradient(80% 45% at 50% 66%,rgba(255,214,140,.7),transparent 70%),
-  radial-gradient(110% 70% at 50% 50%,#FFFAF2 0%,#FFF0D8 45%,#f1cfa0 80%,#c9798a 120%)}
+#bg-show{background:radial-gradient(110% 70% at 50% 40%,#5c0a1b 0%,#3a0510 60%,#1a0206 100%)}
 #bg-light{background:radial-gradient(110% 70% at 50% 35%,#ffffff 0%,#FFFAF2 40%,#FFF0D8 75%,#f0d8ba 100%)}
 #bg-reveal{background:radial-gradient(75% 48% at 50% 40%,#a8203a 0%,#800D22 35%,#4A0613 72%,#1d0207 100%)}
 
-/* نور گرم امید (از شمع پخش می‌شه) */
-#warm{position:absolute;z-index:1;left:50%;top:64%;width:calc(var(--u)*190);height:calc(var(--u)*190);
-  margin:calc(var(--u)*-95) 0 0 calc(var(--u)*-95);border-radius:50%;pointer-events:none;opacity:0;
-  background:radial-gradient(circle,rgba(255,214,140,.6) 0%,rgba(255,200,120,.22) 35%,transparent 65%)}
-
 /* ---------- صحنه‌ها ---------- */
-.scene{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;transition:opacity 1s ease,visibility 0s linear 1s}
-.scene.active{opacity:1;visibility:visible;transition:opacity 1s ease,visibility 0s}
-/* انیمیشن‌های CSS صحنه‌های غیرفعال متوقف می‌شن (صرفه‌جویی CPU) */
+.scene{position:absolute;inset:0;z-index:3;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s linear .3s}
+.scene.active{opacity:1;visibility:visible;transition:opacity .3s ease,visibility 0s}
 .scene:not(.active),.scene:not(.active) *{animation-play-state:paused!important}
 .px{transition:transform .8s ease-out}
 .w{display:inline-block;opacity:0}
 .w.latin{font-family:var(--la);font-style:italic;direction:ltr}
-.gold .w,.gold-t{background:linear-gradient(100deg,#b8873a 0%,#f6dfa8 40%,#C99A4A 60%,#f7e6bd 85%);
+.gold .w{background:linear-gradient(100deg,#b8873a 0%,#f6dfa8 40%,#C99A4A 60%,#f7e6bd 85%);
   -webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 
 #fx{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none}
 #flash{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0}
-.vignette{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:.65;transition:opacity 1.6s ease;
-  background:radial-gradient(120% 90% at 50% 50%,transparent 50%,rgba(30,0,8,.5) 100%)}
-#stage.dark .vignette{opacity:1}
+.vignette{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:.7;background:radial-gradient(120% 90% at 50% 50%,transparent 50%,rgba(30,0,8,.5) 100%)}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes ringOut{0%{transform:scale(.95);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+
+/* ---------- صفحه شروع (جزو کلیپ نیست) ---------- */
+.gate{position:absolute;inset:0;z-index:11;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--u)*6);
+  background:radial-gradient(120% 80% at 50% 45%,#a01a33 0%,#800D22 30%,#4A0613 72%,#25030a 100%);transition:opacity .12s,visibility 0s linear .12s}
+.gate.off{opacity:0;visibility:hidden;pointer-events:none}
+.play{position:relative;width:max(76px,calc(var(--u)*24));height:max(76px,calc(var(--u)*24));border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,#f8e7bd 0%,#E8C987 40%,#C99A4A 100%);box-shadow:0 0 0 calc(var(--u)*.5) rgba(255,240,216,.4),0 calc(var(--u)*2) calc(var(--u)*6) rgba(0,0,0,.4)}
+.play::before{content:"";position:absolute;inset:-8%;border-radius:50%;border:1px solid rgba(232,201,135,.7);animation:ringOut 2.2s ease-out infinite}
+.play svg{width:36%;height:36%;margin-left:8%;fill:var(--burgundy-deep)}
+.gate-t{font-size:calc(var(--u)*4.4);color:var(--gold-l)}
 
 /* =====================================================================
-   جعبه شیرینی لوکس (مشترک بین صحنه شروع و رونمایی)
+   ۱) شروع انفجاری
+   ===================================================================== */
+.hook{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 calc(var(--u)*7)}
+.hook-1{font-size:calc(var(--u)*17);font-weight:900;line-height:1.25;color:var(--cream);opacity:0;text-shadow:0 calc(var(--u)*.8) calc(var(--u)*3) rgba(0,0,0,.35)}
+.hook-2{margin-top:calc(var(--u)*3);min-height:1.6em;font-size:calc(var(--u)*6.8);font-weight:500;line-height:1.6;color:var(--gold-l);text-wrap:balance}
+.shock{position:absolute;left:50%;top:45%;width:calc(var(--u)*130);height:calc(var(--u)*130);margin:calc(var(--u)*-65) 0 0 calc(var(--u)*-65);
+  border-radius:50%;border:calc(var(--u)*.8) solid var(--gold-l);opacity:0;pointer-events:none}
+.slash{position:absolute;left:0;top:30%;width:100%;height:calc(var(--u)*.7);opacity:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--gold-l) 50%,transparent)}
+.slash.s2{top:68%}
+
+/* =====================================================================
+   جعبه شیرینی لوکس
    ===================================================================== */
 .gbox{position:relative;width:calc(var(--u)*56);height:calc(var(--u)*54)}
 .gb-halo{position:absolute;left:50%;top:58%;width:calc(var(--u)*120);height:calc(var(--u)*120);margin:calc(var(--u)*-60) 0 0 calc(var(--u)*-60);
-  border-radius:50%;pointer-events:none;opacity:0;transition:opacity 1.2s ease;
+  border-radius:50%;pointer-events:none;opacity:0;transition:opacity .4s ease;
   background:radial-gradient(circle,rgba(255,226,170,.42) 0%,rgba(201,154,74,.14) 38%,transparent 64%)}
-.gbox.lit .gb-halo{opacity:1;animation:breathe 4.5s ease-in-out infinite}
-@keyframes breathe{50%{transform:scale(.92)}}
+.gbox.lit .gb-halo{opacity:1}
 .gb-shadow{position:absolute;left:50%;bottom:calc(var(--u)*-3.5);width:calc(var(--u)*72);height:calc(var(--u)*7);margin-left:calc(var(--u)*-36);
   background:radial-gradient(ellipse,rgba(0,0,0,.45),transparent 70%)}
 .gb-body{position:absolute;left:0;bottom:0;width:100%;height:calc(var(--u)*40);border-radius:calc(var(--u)*1.4);overflow:hidden;
@@ -111,140 +105,93 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;tou
   background:linear-gradient(90deg,#5e0918,#a3182f 50%,#5e0918);box-shadow:0 0 0 1px rgba(201,154,74,.45)}
 .rib-h{position:absolute;top:50%;left:0;right:0;height:calc(var(--u)*5.6);margin-top:calc(var(--u)*-2.8);
   background:linear-gradient(180deg,#5e0918,#a3182f 50%,#5e0918);box-shadow:0 0 0 1px rgba(201,154,74,.45)}
-.gb-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;
-  padding:calc(var(--u)*.9) calc(var(--u)*3.4);border-radius:99px;
-  background:linear-gradient(180deg,#fffaf2,#f6e4c4);
-  box-shadow:0 0 0 calc(var(--u)*.35) var(--gold),0 calc(var(--u)*.6) calc(var(--u)*1.6) rgba(74,6,19,.35);
+.gb-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);white-space:nowrap;padding:calc(var(--u)*.9) calc(var(--u)*3.4);border-radius:99px;
+  background:linear-gradient(180deg,#fffaf2,#f6e4c4);box-shadow:0 0 0 calc(var(--u)*.35) var(--gold),0 calc(var(--u)*.6) calc(var(--u)*1.6) rgba(74,6,19,.35);
   font-family:var(--la);font-style:italic;font-weight:600;font-size:calc(var(--u)*3.6);color:var(--burgundy)}
-.gb-lid{position:absolute;left:calc(var(--u)*-3);bottom:calc(var(--u)*39);width:calc(var(--u)*62);height:calc(var(--u)*11);
-  border-radius:calc(var(--u)*1.4);transform-origin:12% 100%;
-  background:linear-gradient(180deg,#fffaf2,#f5e1c2);
-  box-shadow:inset 0 0 0 calc(var(--u)*.45) rgba(201,154,74,.75),0 calc(var(--u)*1) calc(var(--u)*2.5) rgba(0,0,0,.25)}
-.gb-lid .rib-v{border-radius:0}
-.lid-edge{position:absolute;left:0;right:0;bottom:0;height:calc(var(--u)*1.1);border-radius:0 0 calc(var(--u)*1.4) calc(var(--u)*1.4);
-  background:linear-gradient(90deg,#a77a33,#ecd08f 50%,#a77a33)}
+.gb-lid{position:absolute;left:calc(var(--u)*-3);bottom:calc(var(--u)*39);width:calc(var(--u)*62);height:calc(var(--u)*11);border-radius:calc(var(--u)*1.4);transform-origin:12% 100%;
+  background:linear-gradient(180deg,#fffaf2,#f5e1c2);box-shadow:inset 0 0 0 calc(var(--u)*.45) rgba(201,154,74,.75),0 calc(var(--u)*1) calc(var(--u)*2.5) rgba(0,0,0,.25)}
+.lid-edge{position:absolute;left:0;right:0;bottom:0;height:calc(var(--u)*1.1);border-radius:0 0 calc(var(--u)*1.4) calc(var(--u)*1.4);background:linear-gradient(90deg,#a77a33,#ecd08f 50%,#a77a33)}
 .bow{position:absolute;left:50%;top:calc(var(--u)*-11.5);width:calc(var(--u)*34);margin-left:calc(var(--u)*-17)}
 .bow svg{display:block;width:100%;height:auto}
 .gb-seam{position:absolute;left:calc(var(--u)*1);right:calc(var(--u)*1);bottom:calc(var(--u)*39.4);height:calc(var(--u)*.8);border-radius:9px;opacity:0;
   background:#fff3d4;box-shadow:0 0 calc(var(--u)*3) calc(var(--u)*1) rgba(255,214,140,.9)}
-.gbox.lit .gb-seam{animation:seam 2.6s ease-in-out infinite}
-@keyframes seam{0%,100%{opacity:.4}50%{opacity:1}}
+.gbox.lit .gb-seam{animation:seam .5s ease-in-out infinite alternate}
+@keyframes seam{from{opacity:.4}to{opacity:1}}
 .gb-glow{position:absolute;left:50%;bottom:calc(var(--u)*33);width:calc(var(--u)*96);height:calc(var(--u)*40);margin-left:calc(var(--u)*-48);opacity:0;pointer-events:none;
   background:radial-gradient(ellipse at 50% 75%,rgba(255,242,205,.95),rgba(232,201,135,.4) 35%,transparent 70%)}
-.gb-beam{position:absolute;left:50%;bottom:calc(var(--u)*40);width:calc(var(--u)*120);height:calc(var(--u)*110);margin-left:calc(var(--u)*-60);
-  opacity:0;pointer-events:none;transform-origin:50% 100%;
-  background:linear-gradient(to top,rgba(255,240,205,.85),rgba(255,220,150,.22) 50%,transparent);
-  clip-path:polygon(40% 100%,60% 100%,100% 0,0 0)}
-.gbox.idle{animation:floaty 4.5s ease-in-out infinite}
-@keyframes floaty{50%{transform:translateY(calc(var(--u)*-1.4))}}
+.gb-beam{position:absolute;left:50%;bottom:calc(var(--u)*40);width:calc(var(--u)*120);height:calc(var(--u)*110);margin-left:calc(var(--u)*-60);opacity:0;pointer-events:none;transform-origin:50% 100%;
+  background:linear-gradient(to top,rgba(255,240,205,.85),rgba(255,220,150,.22) 50%,transparent);clip-path:polygon(40% 100%,60% 100%,100% 0,0 0)}
 
 /* =====================================================================
-   صحنه ۱: شروع (جعبه + کنجکاوی)
+   ۲) باز شدن جعبه + لوگو
    ===================================================================== */
-.brand-top{position:absolute;z-index:2;top:calc(4.5% + var(--safe-t));left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*5.5);opacity:0}
-.seal{position:relative;width:calc(var(--u)*20);height:calc(var(--u)*20);display:grid;place-items:center}
-.logo-ring{position:absolute;inset:-14%;width:128%;height:128%;animation:spin 60s linear infinite;direction:ltr}
-.logo-img{position:relative;width:100%;height:100%;object-fit:contain; transform: scale(1.45);transform-origin: center;}
-.seal.round .logo-img{border-radius:50%;object-fit:cover;
-  box-shadow:0 0 0 calc(var(--u)*.45) var(--gold),0 calc(var(--u)*1.2) calc(var(--u)*3.5) rgba(0,0,0,.35)}
+.rays{position:absolute;left:50%;width:calc(var(--u)*230);height:calc(var(--u)*230);margin:calc(var(--u)*-115) 0 0 calc(var(--u)*-115);opacity:0;pointer-events:none}
+.rays::before{content:"";position:absolute;inset:0;background:repeating-conic-gradient(from 0deg,rgba(255,224,160,.18) 0deg 6deg,transparent 6deg 17deg);
+  -webkit-mask:radial-gradient(circle,#000 0%,transparent 58%);mask:radial-gradient(circle,#000 0%,transparent 58%);animation:spin 60s linear infinite}
+.lite .rays::before{animation:none;-webkit-mask:none;mask:none;background:radial-gradient(circle,rgba(255,224,160,.28),transparent 55%)}
+#openRays{top:33%}
+.ibox-wrap{position:absolute;left:50%;top:66%;width:calc(var(--u)*56);height:calc(var(--u)*54);margin:calc(var(--u)*-27) 0 0 calc(var(--u)*-28);opacity:0;z-index:2}
+.logo-pop{position:absolute;left:50%;top:33%;width:calc(var(--u)*44);height:calc(var(--u)*44);margin:calc(var(--u)*-22) 0 0 calc(var(--u)*-22);opacity:0;z-index:3}
+.logo-glow{position:absolute;inset:-35%;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,226,170,.5),rgba(201,154,74,.15) 40%,transparent 65%)}
+.seal{position:relative;width:100%;height:100%;display:grid;place-items:center}
+.logo-ring{position:absolute;inset:-14%;width:128%;height:128%;animation:spin 30s linear infinite;direction:ltr}
+.logo-img{position:relative;width:100%;height:100%;object-fit:contain;transform:scale(1.45);transform-origin:center}
+.seal.round .logo-img{border-radius:50%;object-fit:cover;box-shadow:0 0 0 calc(var(--u)*.45) var(--gold),0 calc(var(--u)*1.2) calc(var(--u)*3.5) rgba(0,0,0,.35)}
 .logo-fallback{position:relative;width:80%;height:80%;border-radius:50%;display:none;flex-direction:column;align-items:center;justify-content:center;
   background:radial-gradient(circle at 40% 35%,#FFFAF2,#FFF0D8 70%,#f2d9b2);box-shadow:0 0 0 calc(var(--u)*.45) var(--gold)}
-.logo-fallback b{font-family:var(--la);font-style:italic;font-weight:600;font-size:calc(var(--u)*3.3);color:var(--burgundy);direction:ltr}
-.logo-fallback small{font-size:calc(var(--u)*1.7);color:var(--gold)}
-.top-cap{display:flex;align-items:center;gap:calc(var(--u)*2.4);font-family:var(--la);font-style:italic;font-size:calc(var(--u)*3.5);
-  letter-spacing:calc(var(--u)*.8);color:var(--gold-l)}
-.top-cap i{display:block;width:calc(var(--u)*9);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
-.top-cap i:last-child{transform:scaleX(-1)}
-
-.intro-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:calc(var(--u)*22)}
-.ibox-wrap{opacity:0}
-.intro-text{margin-top:calc(var(--u)*10);min-height:1.7em;font-size:calc(var(--u)*6.2);line-height:1.7;font-weight:400;color:var(--cream);
-  text-align:center;padding:0 calc(var(--u)*8);text-shadow:0 0 calc(var(--u)*3) rgba(232,201,135,.4)}
-.cta-wrap{position:relative;margin-top:calc(var(--u)*6);opacity:0;pointer-events:none}
-.cta-wrap.ready{pointer-events:auto}
-.cta-wrap::before{content:"";position:absolute;inset:calc(var(--u)*-1.2);border-radius:999px;
-  border:1px solid rgba(232,201,135,.6);animation:ringOut 2.6s ease-out infinite;pointer-events:none}
-@keyframes ringOut{0%{transform:scale(.95);opacity:.9}100%{transform:scale(1.25,1.5);opacity:0}}
-.cta{position:relative;overflow:hidden;display:block;min-height:48px;min-width:calc(var(--u)*50);
-  font-size:calc(var(--u)*5);font-weight:700;color:var(--burgundy-deep);
-  padding:calc(var(--u)*3) calc(var(--u)*10);border-radius:999px;
-  background:linear-gradient(135deg,#f8e7bd 0%,#E8C987 35%,#C99A4A 70%,#f0d49a 100%);
-  box-shadow:0 0 0 calc(var(--u)*.4) rgba(255,240,216,.45),0 calc(var(--u)*1.6) calc(var(--u)*5) rgba(0,0,0,.35),0 0 calc(var(--u)*6) rgba(232,201,135,.4);
-  transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
-.cta::before{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);
-  transform:translateX(-160%) skewX(-20deg);animation:sweep 3.2s ease-in-out infinite}
-.cta:active{transform:scale(.95);transition-duration:.12s}
-@media (hover:hover){.cta:hover{transform:translateY(-2px) scale(1.04)}}
-.cta-label{position:relative;z-index:1}
-@keyframes sweep{0%,55%{transform:translateX(-160%) skewX(-20deg)}100%{transform:translateX(330%) skewX(-20deg)}}
-.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.65);pointer-events:none;transform:scale(0)}
+.logo-fallback b{font-family:var(--la);font-style:italic;font-weight:600;font-size:calc(var(--u)*7);color:var(--burgundy);direction:ltr}
+.logo-fallback small{font-size:calc(var(--u)*3.2);color:var(--gold)}
+.open-text{position:absolute;left:0;right:0;top:64%;text-align:center;font-size:calc(var(--u)*8.4);font-weight:900;line-height:1.5;color:var(--cream);
+  padding:0 calc(var(--u)*6);opacity:0;text-wrap:balance;text-shadow:0 calc(var(--u)*.6) calc(var(--u)*2.5) rgba(0,0,0,.35)}
+.open-line{position:absolute;left:50%;top:75%;width:calc(var(--u)*40);height:2px;margin-left:calc(var(--u)*-20);opacity:0;
+  background:linear-gradient(90deg,transparent,var(--gold-l),transparent)}
 
 /* =====================================================================
-   صحنه ۲: داستان تصویری
+   ۳) معرفی برند
    ===================================================================== */
-.chapter{position:absolute;top:calc(8% + var(--safe-t));left:0;right:0;display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*3);
-  font-family:var(--la);font-style:italic;font-size:calc(var(--u)*3.2);letter-spacing:calc(var(--u)*1);color:var(--gold);opacity:0;transition:color 1.2s}
-.chapter i{display:block;width:calc(var(--u)*10);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
-.chapter i:last-child{transform:scaleX(-1)}
-#sc-story.night .chapter{color:var(--gold-l)}
-.story-text{position:absolute;left:0;right:0;top:40%;transform:translateY(-50%);transition:transform 1.3s var(--ease)}
-.story-text.up{transform:translateY(calc(-50% - var(--sh)*.15))}
-.line{font-size:calc(var(--u)*6.8);line-height:1.9;font-weight:500;text-align:center;padding:0 calc(var(--u)*8);
-  color:var(--burgundy);transition:color 1.2s;text-wrap:balance;text-shadow:0 calc(var(--u)*.3) calc(var(--u)*2) rgba(255,250,242,.6)}
-#sc-story.night .line{color:var(--cream);text-shadow:0 0 calc(var(--u)*3) rgba(0,0,0,.45)}
-.line.glow{text-shadow:0 0 calc(var(--u)*4) rgba(232,180,90,.6),0 0 calc(var(--u)*1) rgba(255,250,242,.9)}
-.caret{display:inline-block;width:.07em;height:1.05em;margin-inline-start:.1em;vertical-align:-.18em;border-radius:2px;
-  background:var(--gold);animation:blink .85s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.road{position:absolute;left:50%;top:55%;width:calc(var(--u)*70);margin-left:calc(var(--u)*-35);opacity:0;overflow:visible}
-.candle{position:absolute;left:50%;top:57%;width:calc(var(--u)*16);margin-left:calc(var(--u)*-8);opacity:0}
-.candle svg{display:block;width:100%;height:auto;overflow:visible}
-.flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick 1.6s ease-in-out infinite}
-.flame-glow{animation:glowP 2s ease-in-out infinite}
-@keyframes flick{0%,100%{transform:scale(1,1) skewX(0)}25%{transform:scale(.92,1.08) skewX(3deg)}50%{transform:scale(1.04,.94) skewX(-2deg)}75%{transform:scale(.96,1.05) skewX(2deg)}}
-@keyframes glowP{50%{opacity:.6}}
-
-/* کیک مشترک (از داستان وارد می‌شه و به صحنه پیام می‌ره) */
-.cake-layer{position:absolute;z-index:2;left:50%;top:0;width:calc(var(--u)*60);margin-left:calc(var(--u)*-30);opacity:0;transform-origin:50% 0;pointer-events:none}
-.cake{display:block;width:100%;height:auto;overflow:visible}
-.tw{transform-box:fill-box;transform-origin:center;animation:tw 2.4s ease-in-out infinite}
-@keyframes tw{0%,100%{transform:scale(.3) rotate(0);opacity:.2}50%{transform:scale(1) rotate(45deg);opacity:1}}
-#stage:not([data-scene="story"]):not([data-scene="msg"]) .cake-layer *{animation-play-state:paused}
+.shots{position:absolute;left:calc(var(--u)*9);right:calc(var(--u)*9);top:calc(11% + var(--safe-t));height:58%;border-radius:calc(var(--u)*5);overflow:hidden;opacity:0;
+  box-shadow:0 0 0 calc(var(--u)*.5) var(--gold),0 calc(var(--u)*3) calc(var(--u)*8) rgba(0,0,0,.45)}
+.shot{position:absolute;inset:0;opacity:0}
+.shot:nth-child(1){z-index:1;background:radial-gradient(90% 70% at 50% 40%,#a8203a,#800D22 50%,#4A0613)}
+.shot:nth-child(2){z-index:2;background:radial-gradient(90% 70% at 50% 40%,#fff6e4,#f3dca6 55%,#C99A4A)}
+.shot:nth-child(3){z-index:3;background:radial-gradient(90% 70% at 50% 40%,#FFFAF2,#FFF0D8 55%,#efd3aa)}
+.shot-art{position:absolute;inset:0;display:grid;place-items:center}
+.shot-art svg{width:80%;height:auto;margin-bottom:12%}
+.shot-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shot.has-photo .shot-art svg{display:none}
+.shot-tag{position:absolute;left:0;right:0;bottom:calc(var(--u)*5);text-align:center;font-family:var(--la);font-style:italic;font-weight:600;
+  font-size:calc(var(--u)*5.4);letter-spacing:calc(var(--u)*.3);color:var(--burgundy);opacity:0;direction:ltr}
+.shot:nth-child(1) .shot-tag{color:var(--gold-l)}
+.shot.has-photo .shot-tag{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.wipe{position:absolute;top:-10%;bottom:-10%;left:0;width:22%;z-index:6;opacity:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,236,190,.9),transparent)}
+.show-text{position:absolute;left:0;right:0;top:75%;text-align:center;font-size:calc(var(--u)*7);font-weight:700;line-height:1.6;color:var(--cream);padding:0 calc(var(--u)*7);text-wrap:balance}
 
 /* =====================================================================
-   صحنه ۳: پیام صمیمی
+   ۴) دعوت به حمایت
    ===================================================================== */
-.msg-texts{position:absolute;left:0;right:0;top:49%;height:27%}
-.msg-group{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--u)*1.2);padding:0 calc(var(--u)*7)}
-.msg-line{font-size:calc(var(--u)*5.8);line-height:1.8;text-align:center;font-weight:400;color:var(--brown);text-wrap:balance}
-.msg-line.strong{color:var(--burgundy);font-weight:500}
-.msg-line.big{font-size:calc(var(--u)*7.2);font-weight:700;color:var(--burgundy)}
-.heart-wrap{position:absolute;left:50%;top:78%;width:max(56px,calc(var(--u)*18));height:max(56px,calc(var(--u)*18));
-  transform:translateX(-50%);opacity:0}
-.heart-pop{width:100%;height:100%;position:relative}
-.heart-btn{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;display:grid;place-items:center;
+.cta-big{position:absolute;left:0;right:0;top:20%;text-align:center;font-size:calc(var(--u)*13);font-weight:900;line-height:1.35;color:var(--burgundy);
+  padding:0 calc(var(--u)*6);opacity:0;text-wrap:balance}
+.cta-ring{position:absolute;left:50%;top:32%;width:calc(var(--u)*120);height:calc(var(--u)*120);margin:calc(var(--u)*-60) 0 0 calc(var(--u)*-60);
+  border-radius:50%;border:calc(var(--u)*.7) solid var(--burgundy);opacity:0;pointer-events:none}
+.acts{position:absolute;left:0;right:0;top:57%;display:flex;justify-content:center;gap:calc(var(--u)*12)}
+.act{display:flex;flex-direction:column;align-items:center;gap:calc(var(--u)*2.6);opacity:0}
+.act-beat{position:relative;width:max(64px,calc(var(--u)*22));height:max(64px,calc(var(--u)*22))}
+.act-btn{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;display:grid;place-items:center;
   background:radial-gradient(circle at 35% 30%,#FFFAF2,#FFF0D8 70%,#f1d7ae);
-  box-shadow:0 0 0 calc(var(--u)*.5) var(--gold),0 calc(var(--u)*1.6) calc(var(--u)*4.5) rgba(128,13,34,.22);transition:background .5s}
-.heart-btn svg{width:52%;height:52%;fill:none;stroke:var(--burgundy);stroke-width:1.6;transition:fill .4s,stroke .4s}
-.heart-btn:not(.liked) svg{animation:hb 1.4s ease-in-out infinite}
-.heart-btn.liked{background:radial-gradient(circle at 35% 30%,#b3253f,#800D22 65%,#5e0918)}
-.heart-btn.liked svg{fill:var(--cream);stroke:var(--cream)}
-@keyframes hb{0%,100%{transform:scale(1)}14%{transform:scale(1.16)}28%{transform:scale(1)}42%{transform:scale(1.1)}}
-.heart-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--burgundy);opacity:0;pointer-events:none}
+  box-shadow:0 0 0 calc(var(--u)*.5) var(--gold),0 calc(var(--u)*1.6) calc(var(--u)*4.5) rgba(128,13,34,.22);transition:background .3s}
+.act-btn svg{width:50%;height:50%;fill:none;stroke:var(--burgundy);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:fill .3s,stroke .3s}
+.act-btn.liked,.act-btn.followed{background:radial-gradient(circle at 35% 30%,#b3253f,#800D22 65%,#5e0918)}
+.act-btn.liked svg{fill:var(--cream);stroke:var(--cream)}
+.act-btn.followed svg{stroke:var(--cream)}
+.act-btn .ic-check{display:none}.act-btn.followed .ic-plus{display:none}.act-btn.followed .ic-check{display:inline}
+.act-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--burgundy);opacity:0;pointer-events:none}
+.act-label{font-size:calc(var(--u)*4.6);font-weight:700;color:var(--burgundy)}
 
 /* =====================================================================
-   صحنه ۴: رونمایی
+   ۵) پایان: پیج اینستاگرام
    ===================================================================== */
-.box-rays{position:absolute;left:50%;top:40%;width:calc(var(--u)*230);height:calc(var(--u)*230);
-  margin:calc(var(--u)*-115) 0 0 calc(var(--u)*-115);opacity:0;pointer-events:none}
-.box-rays::before{content:"";position:absolute;inset:0;
-  background:repeating-conic-gradient(from 0deg,rgba(255,224,160,.18) 0deg 6deg,transparent 6deg 17deg);
-  -webkit-mask:radial-gradient(circle,#000 0%,transparent 58%);mask:radial-gradient(circle,#000 0%,transparent 58%);
-  animation:spin 80s linear infinite}
-.lite .box-rays::before{animation:none;-webkit-mask:none;mask:none;background:radial-gradient(circle,rgba(255,224,160,.28),transparent 55%)}
-
-.card-pos{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);z-index:3}
+#boxRays{top:39%}
+.card-pos{position:absolute;left:50%;top:39%;transform:translate(-50%,-50%);z-index:3}
 .card-zoom{transform:translate3d(0,0,0) scale(1);transition:transform .8s var(--ease)}
 #stage.zoomed .card-pos{z-index:9}
 #stage.zoomed .card-zoom{transform:translate3d(0,var(--zy,0px),0) scale(var(--zk,1.3))}
@@ -252,22 +199,18 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;tou
   background:linear-gradient(145deg,#f8e6bb 0%,#C99A4A 35%,#f3dca6 58%,#a77a33 100%);
   box-shadow:0 calc(var(--u)*4) calc(var(--u)*10) rgba(0,0,0,.5),0 0 calc(var(--u)*12) rgba(232,201,135,.3)}
 #stage.zoomed .card{cursor:zoom-out}
-.card img{display:block;width:auto;height:auto;max-width:calc(var(--u)*78);max-height:calc(var(--sh)*.5);
-  border-radius:calc(var(--u)*3);background:#fff}
+.card img{display:block;width:auto;height:auto;max-width:calc(var(--u)*78);max-height:calc(var(--sh)*.5);border-radius:calc(var(--u)*3);background:#fff}
 .card-shine{position:absolute;inset:calc(var(--u)*1.2);border-radius:calc(var(--u)*3);overflow:hidden;pointer-events:none}
-.card-shine::before{content:"";position:absolute;top:-20%;bottom:-20%;left:0;width:35%;
-  transform:translateX(-160%) skewX(-18deg);background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent)}
-.card.shine .card-shine::before{animation:cardSweep 1.6s ease-in-out forwards}
+.card-shine::before{content:"";position:absolute;top:-20%;bottom:-20%;left:0;width:35%;transform:translateX(-160%) skewX(-18deg);
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent)}
+.card.shine .card-shine::before{animation:cardSweep 1.1s ease-in-out forwards}
 @keyframes cardSweep{to{transform:translateX(420%) skewX(-18deg)}}
 .card-ring{position:absolute;inset:calc(var(--u)*-1.5);border-radius:calc(var(--u)*5.2);border:2px solid var(--gold-l);opacity:0;pointer-events:none}
-
-/* جایگزین تصویر اینستاگرام اگه فایل پیدا نشه */
-.insta-fallback{display:none;width:auto;height:calc(var(--sh)*.5);max-width:calc(var(--u)*78);aspect-ratio:9/17;
-  border-radius:calc(var(--u)*3);background:var(--milk);padding:calc(var(--u)*4) calc(var(--u)*3);flex-direction:column;gap:calc(var(--u)*2.4);direction:ltr;overflow:hidden}
+.insta-fallback{display:none;width:auto;height:calc(var(--sh)*.5);max-width:calc(var(--u)*78);aspect-ratio:9/17;border-radius:calc(var(--u)*3);background:var(--milk);
+  padding:calc(var(--u)*4) calc(var(--u)*3);flex-direction:column;gap:calc(var(--u)*2.4);direction:ltr;overflow:hidden}
 .ig-head{display:flex;align-items:center;gap:calc(var(--u)*3)}
 .ig-av{width:calc(var(--u)*13);height:calc(var(--u)*13);border-radius:50%;flex:none;display:grid;place-items:center;
-  background:radial-gradient(circle,#FFF0D8 60%,transparent 61%),conic-gradient(var(--gold),var(--burgundy),var(--gold));
-  font-family:var(--la);font-style:italic;color:var(--burgundy);font-size:calc(var(--u)*5)}
+  background:radial-gradient(circle,#FFF0D8 60%,transparent 61%),conic-gradient(var(--gold),var(--burgundy),var(--gold));font-family:var(--la);font-style:italic;color:var(--burgundy);font-size:calc(var(--u)*5)}
 .ig-stats{display:flex;gap:calc(var(--u)*3);font-size:calc(var(--u)*2.6);color:var(--brown);text-align:center}
 .ig-stats b{display:block;font-size:calc(var(--u)*3.2);color:var(--burgundy)}
 .ig-name{font-family:var(--la);font-style:italic;font-size:calc(var(--u)*4);color:var(--burgundy)}
@@ -276,40 +219,28 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit;tou
 .ig-grid i{aspect-ratio:1;border-radius:calc(var(--u)*.8);background:linear-gradient(135deg,#FFF0D8,#f0d2a6)}
 .ig-grid i:nth-child(odd){background:linear-gradient(135deg,#9e1a31,#5e0918)}
 .ig-note{font-family:var(--fa);direction:rtl;font-size:calc(var(--u)*2.5);color:var(--gold);text-align:center}
-
-.box-pos{position:absolute;left:50%;top:61%;transform:translate(-50%,-50%);z-index:4}
-.box-pos .gbox{opacity:0}
-
-.welcome{position:absolute;left:0;right:0;top:67.5%;z-index:5;display:flex;flex-direction:column;align-items:center;padding:0 calc(var(--u)*6);text-align:center}
-.brand-name{font-family:var(--la);font-style:italic;font-weight:600;font-size:calc(var(--u)*10);line-height:1.25;direction:ltr;min-height:1.25em}
-.welcome-1{margin-top:calc(var(--u)*1);font-size:calc(var(--u)*5.2);font-weight:500;line-height:1.7;color:var(--cream);min-height:1.7em}
-.hint{margin-top:calc(var(--u)*2);font-size:calc(var(--u)*3.1);color:rgba(232,201,135,.85);opacity:0}
-
-.zoom-dim{position:absolute;inset:0;z-index:8;background:transparent;opacity:0;pointer-events:none;transition:opacity .5s ease}
+.welcome{position:absolute;left:0;right:0;top:69%;z-index:5;display:flex;flex-direction:column;align-items:center;padding:0 calc(var(--u)*6);text-align:center}
+.brand-name{font-family:var(--la);font-style:italic;font-weight:600;font-size:calc(var(--u)*11.5);line-height:1.2;direction:ltr;min-height:1.2em}
+.welcome-1{margin-top:calc(var(--u)*1.2);font-size:calc(var(--u)*5.2);font-weight:500;line-height:1.7;color:var(--cream);min-height:1.7em}
+.hint{margin-top:calc(var(--u)*1.5);font-size:calc(var(--u)*3.1);color:rgba(232,201,135,.85);opacity:0}
+.zoom-dim{position:absolute;inset:0;z-index:8;background:transparent;opacity:0;pointer-events:none}
 #stage.zoomed .zoom-dim{opacity:1;pointer-events:auto}
-
 .replay{position:absolute;left:50%;bottom:calc(3% + var(--safe-b));transform:translateX(-50%);z-index:6;opacity:0;pointer-events:none;
   min-height:44px;font-size:calc(var(--u)*3.6);color:var(--gold-l);padding:calc(var(--u)*1.8) calc(var(--u)*5.5);border-radius:99px;
-  border:1px solid rgba(232,201,135,.55);background:rgba(74,6,19,.55);transition:background .3s,color .3s}
+  border:1px solid rgba(232,201,135,.55);background:rgba(74,6,19,.55)}
 .replay.ready{pointer-events:auto}
-@media (hover:hover){.replay:hover{background:rgba(201,154,74,.3);color:var(--cream)}}
 
 /* دکمه صدا */
-.snd{position:absolute;top:calc(var(--u)*3.5 + var(--safe-t));left:calc(var(--u)*3.5);z-index:10;
-  width:max(44px,calc(var(--u)*9.5));height:max(44px,calc(var(--u)*9.5));border-radius:50%;
-  display:grid;place-items:center;color:var(--gold-l);background:rgba(74,6,19,.5);border:1px solid rgba(232,201,135,.45);
-  transition:background .6s,color .6s,border-color .6s}
+.snd{position:absolute;top:calc(var(--u)*3.5 + var(--safe-t));left:calc(var(--u)*3.5);z-index:12;width:max(44px,calc(var(--u)*9.5));height:max(44px,calc(var(--u)*9.5));border-radius:50%;
+  display:grid;place-items:center;color:var(--gold-l);background:rgba(74,6,19,.5);border:1px solid rgba(232,201,135,.45);transition:background .3s,color .3s,border-color .3s}
 .snd svg{width:48%;height:48%}
 .snd .on{display:none}.snd.playing .on{display:block}.snd.playing .off{display:none}
-#stage[data-scene="msg"] .snd,#stage[data-scene="story"] .snd{color:var(--burgundy);background:rgba(255,250,242,.6);border-color:rgba(128,13,34,.3)}
+#stage[data-scene="cta"] .snd{color:var(--burgundy);background:rgba(255,250,242,.6);border-color:rgba(128,13,34,.3)}
 
-/* حالت فیلم‌برداری تمیز (کلید H) */
 body.clean .snd,body.clean .replay,body.clean .hint{opacity:0!important;pointer-events:none!important}
 
-/* کاهش حرکت: انیمیشن‌های تکرارشونده خاموش */
 @media (prefers-reduced-motion:reduce){
-  .logo-ring,.gbox.lit .gb-halo,.gbox.idle,.cta::before,.cta-wrap::before,.heart-btn svg,.tw,.box-rays::before,.caret{animation:none!important}
-  .gbox.lit .gb-seam{animation:none!important;opacity:.8}
+  .logo-ring,.play::before,.rays::before,.gbox.lit .gb-seam{animation:none!important}
 }
 </style>
 </head>
@@ -317,129 +248,146 @@ body.clean .snd,body.clean .replay,body.clean .hint{opacity:0!important;pointer-
 <body>
 <div class="backdrop"></div>
 
-<main id="stage" data-scene="intro">
-
+<main id="stage" data-scene="hook">
   <div id="bgs">
     <div class="bg" id="bg-intro"></div>
-    <div class="bg" id="bg-story"></div>
-    <div class="bg" id="bg-dim"></div>
-    <div class="bg" id="bg-night"></div>
-    <div class="bg" id="bg-dawn"></div>
+    <div class="bg" id="bg-show"></div>
     <div class="bg" id="bg-light"></div>
     <div class="bg" id="bg-reveal"></div>
   </div>
-  <div id="warm"></div>
 
-  <!-- کیک مشترک داستان و پیام -->
-  <div class="cake-layer" id="cakeLayer">
-    <div class="px" data-depth="8">
-      <svg class="cake" viewBox="0 0 240 230" aria-hidden="true">
-        <defs>
-          <linearGradient id="gCream" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FFFAF2"/><stop offset="1" stop-color="#F3DDBA"/></linearGradient>
-          <linearGradient id="gBurg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#a3182f"/><stop offset="1" stop-color="#5e0918"/></linearGradient>
-          <radialGradient id="gFlame"><stop offset="0" stop-color="#fff6d8"/><stop offset=".6" stop-color="#ffcf6b"/><stop offset="1" stop-color="#e98b2a"/></radialGradient>
-          <radialGradient id="gGlow"><stop offset="0" stop-color="rgba(255,214,140,.7)"/><stop offset="1" stop-color="rgba(255,214,140,0)"/></radialGradient>
-        </defs>
-        <ellipse cx="120" cy="212" rx="104" ry="13" fill="#C99A4A" opacity=".9"/>
-        <ellipse cx="120" cy="208" rx="100" ry="11" fill="#FFFAF2"/>
-        <rect x="38" y="140" width="164" height="68" rx="10" fill="url(#gBurg)"/>
-        <path d="M38 150 q0-10 10-10 h144 q10 0 10 10 v8 q-8 10-16 0 q-8 12-18 0 q-9 14-20 0 q-9 12-19 0 q-9 15-20 0 q-9 12-19 0 q-9 13-20 0 q-8 11-16 0z" fill="url(#gCream)"/>
-        <path d="M44 196 h152" stroke="#C99A4A" stroke-width="1.4" stroke-dasharray="2 5" stroke-linecap="round"/>
-        <rect x="68" y="88" width="104" height="56" rx="9" fill="url(#gCream)"/>
-        <path d="M68 97 q0-9 9-9 h86 q9 0 9 9 v6 q-7 9-14 0 q-7 12-16 0 q-8 10-16 0 q-8 13-17 0 q-8 10-16 0 q-7 11-15 0z" fill="url(#gBurg)"/>
-        <path d="M74 132 h92" stroke="#C99A4A" stroke-width="1.2"/>
-        <g fill="#800D22"><circle cx="90" cy="86" r="6"/><circle cx="150" cy="86" r="6"/><circle cx="60" cy="139" r="5.5"/><circle cx="180" cy="139" r="5.5"/><circle cx="120" cy="139" r="5.5"/></g>
-        <g fill="#fff" opacity=".7"><circle cx="88" cy="84" r="1.6"/><circle cx="148" cy="84" r="1.6"/><circle cx="118" cy="137" r="1.4"/></g>
-        <rect x="115" y="52" width="10" height="36" rx="2" fill="#FFFAF2" stroke="#C99A4A" stroke-width="1"/>
-        <path d="M115 60 l10 -5 M115 70 l10 -5 M115 80 l10 -5" stroke="#C99A4A" stroke-width="1.6"/>
-        <circle class="flame-glow" cx="120" cy="38" r="22" fill="url(#gGlow)"/>
-        <path class="flame" d="M120 24 C126 34 128 40 124 46 C122 50 118 50 116 46 C112 40 115 33 120 24z" fill="url(#gFlame)"/>
-        <g fill="#E8C987">
-          <path class="tw" d="M30 70 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/>
-          <path class="tw" style="animation-delay:.8s" d="M210 60 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/>
-          <path class="tw" style="animation-delay:1.6s" d="M196 112 l1.5 4.5 4.5 1.5 -4.5 1.5 -1.5 4.5 -1.5 -4.5 -4.5 -1.5 4.5 -1.5z"/>
-        </g>
-      </svg>
+  <!-- ================= ۱) شروع انفجاری ================= -->
+  <section class="scene" id="sc-hook">
+    <div class="shock" id="shock"></div>
+    <i class="slash" id="slash1"></i><i class="slash s2" id="slash2"></i>
+    <div class="hook" id="hookInner">
+      <p class="hook-1" id="hook1"></p>
+      <p class="hook-2" id="hook2"></p>
     </div>
-  </div>
+  </section>
 
-  <!-- ================= صحنه ۱: شروع ================= -->
-  <section class="scene" id="sc-intro">
-    <div class="brand-top" id="brandTop">
-      <div class="seal" id="logoWrap">
-        <svg class="logo-ring" viewBox="0 0 200 200" aria-hidden="true">
-          <defs><path id="ringPath" d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/></defs>
-          <circle cx="100" cy="100" r="95" fill="none" stroke="#C99A4A" stroke-width=".8" stroke-dasharray="1 3.2"/>
-          <text font-size="9" fill="#E8C987" font-family="Playfair Display, Georgia, serif" font-style="italic" direction="ltr">
-            <textPath href="#ringPath" textLength="515" lengthAdjust="spacing">CACKLORIS • PATISSERIE &amp; CAKE • HANDMADE WITH LOVE •</textPath>
-          </text>
+  <!-- ================= ۲) جعبه + لوگو ================= -->
+  <section class="scene" id="sc-open">
+    <div class="rays" id="openRays"></div>
+    <div class="logo-pop" id="logoPop">
+      <div class="px" data-depth="10" style="width:100%;height:100%">
+        <div class="logo-glow"></div>
+        <div class="seal" id="logoWrap">
+          <svg class="logo-ring" viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="ringPath" d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/></defs>
+            <circle cx="100" cy="100" r="95" fill="none" stroke="#C99A4A" stroke-width=".8" stroke-dasharray="1 3.2"/>
+            <text font-size="9" fill="#E8C987" font-family="Playfair Display, Georgia, serif" font-style="italic" direction="ltr">
+              <textPath href="#ringPath" textLength="515" lengthAdjust="spacing">CACKLORIS • PATISSERIE &amp; CAKE • HANDMADE WITH LOVE •</textPath>
+            </text>
+          </svg>
+          <img class="logo-img" id="logoImg" alt="cackloris" decoding="async">
+          <div class="logo-fallback" id="logoFallback"><b>cackloris</b><small>شیرینی و کیک</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="ibox-wrap" id="iBoxWrap"><div class="gbox" id="iBox"></div></div>
+    <p class="open-text" id="openText"></p>
+    <i class="open-line" id="openLine"></i>
+  </section>
+
+  <!-- ================= ۳) معرفی برند ================= -->
+  <section class="scene" id="sc-show">
+    <div class="shots" id="shots">
+      <div class="shot"><div class="shot-art">
+        <svg viewBox="0 0 240 230" aria-hidden="true">
+          <defs>
+            <linearGradient id="gCream" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FFFAF2"/><stop offset="1" stop-color="#F3DDBA"/></linearGradient>
+            <linearGradient id="gBurg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#a3182f"/><stop offset="1" stop-color="#5e0918"/></linearGradient>
+            <radialGradient id="gFlame"><stop offset="0" stop-color="#fff6d8"/><stop offset=".6" stop-color="#ffcf6b"/><stop offset="1" stop-color="#e98b2a"/></radialGradient>
+            <radialGradient id="gGlow"><stop offset="0" stop-color="rgba(255,214,140,.7)"/><stop offset="1" stop-color="rgba(255,214,140,0)"/></radialGradient>
+          </defs>
+          <ellipse cx="120" cy="212" rx="104" ry="13" fill="#C99A4A" opacity=".9"/>
+          <ellipse cx="120" cy="208" rx="100" ry="11" fill="#FFFAF2"/>
+          <rect x="38" y="140" width="164" height="68" rx="10" fill="url(#gBurg)" stroke="#C99A4A" stroke-width="1"/>
+          <path d="M38 150 q0-10 10-10 h144 q10 0 10 10 v8 q-8 10-16 0 q-8 12-18 0 q-9 14-20 0 q-9 12-19 0 q-9 15-20 0 q-9 12-19 0 q-9 13-20 0 q-8 11-16 0z" fill="url(#gCream)"/>
+          <path d="M44 196 h152" stroke="#C99A4A" stroke-width="1.4" stroke-dasharray="2 5" stroke-linecap="round"/>
+          <rect x="68" y="88" width="104" height="56" rx="9" fill="url(#gCream)"/>
+          <path d="M68 97 q0-9 9-9 h86 q9 0 9 9 v6 q-7 9-14 0 q-7 12-16 0 q-8 10-16 0 q-8 13-17 0 q-8 10-16 0 q-7 11-15 0z" fill="url(#gBurg)"/>
+          <path d="M74 132 h92" stroke="#C99A4A" stroke-width="1.2"/>
+          <g fill="#800D22" stroke="#C99A4A" stroke-width=".6"><circle cx="90" cy="86" r="6"/><circle cx="150" cy="86" r="6"/><circle cx="60" cy="139" r="5.5"/><circle cx="180" cy="139" r="5.5"/><circle cx="120" cy="139" r="5.5"/></g>
+          <rect x="115" y="52" width="10" height="36" rx="2" fill="#FFFAF2" stroke="#C99A4A" stroke-width="1"/>
+          <circle cx="120" cy="38" r="22" fill="url(#gGlow)"/>
+          <path d="M120 24 C126 34 128 40 124 46 C122 50 118 50 116 46 C112 40 115 33 120 24z" fill="url(#gFlame)"/>
         </svg>
-        <img class="logo-img" id="logoImg" alt="cackloris" decoding="async">
-        <div class="logo-fallback" id="logoFallback"><b>cackloris</b><small>شیرینی و کیک</small></div>
-      </div>
-      <div class="top-cap ltr"><i></i>cackloris<i></i></div>
-    </div>
+      </div><span class="shot-tag"></span></div>
 
-    <div class="intro-center" id="introStage">
-      <div class="ibox-wrap" id="iBoxWrap">
-        <div class="px" data-depth="12"><div class="gbox" id="iBox"></div></div>
+      <div class="shot"><div class="shot-art">
+        <svg viewBox="0 0 200 210" aria-hidden="true">
+          <defs>
+            <linearGradient id="cpW" x1="0" x2="1"><stop offset="0" stop-color="#5e0918"/><stop offset=".5" stop-color="#a3182f"/><stop offset="1" stop-color="#5e0918"/></linearGradient>
+            <linearGradient id="cpF" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FFFAF2"/><stop offset="1" stop-color="#F1D9B4"/></linearGradient>
+          </defs>
+          <ellipse cx="100" cy="196" rx="62" ry="8" fill="rgba(74,6,19,.25)"/>
+          <path d="M52 118 H148 L134 192 H66 Z" fill="url(#cpW)"/>
+          <path d="M68 118 L75 192 M84 118 L88 192 M100 118 V192 M116 118 L112 192 M132 118 L125 192" stroke="#C99A4A" stroke-width="1.4" opacity=".7"/>
+          <path d="M46 120 C40 104 54 94 66 96 C62 78 80 68 94 74 C98 58 118 56 126 70 C140 66 154 80 146 96 C160 98 162 116 152 122 Z" fill="url(#cpF)" stroke="#e9cfa4" stroke-width="1"/>
+          <path d="M60 108 C80 100 120 100 140 108 M74 88 C90 82 112 82 128 88" stroke="#e2c497" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <g fill="#C99A4A"><rect x="70" y="100" width="7" height="2.4" rx="1.2" transform="rotate(-30 73 101)"/><rect x="118" y="92" width="7" height="2.4" rx="1.2" transform="rotate(40 121 93)"/><rect x="96" y="104" width="7" height="2.4" rx="1.2" transform="rotate(10 99 105)"/><rect x="132" y="108" width="7" height="2.4" rx="1.2" transform="rotate(-50 135 109)"/><rect x="86" y="84" width="7" height="2.4" rx="1.2" transform="rotate(60 89 85)"/></g>
+          <path d="M104 56 C106 44 112 38 120 36" stroke="#5e0918" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <circle cx="102" cy="62" r="11" fill="#800D22"/><circle cx="98" cy="58" r="3" fill="#fff" opacity=".6"/>
+        </svg>
+      </div><span class="shot-tag"></span></div>
+
+      <div class="shot"><div class="shot-art">
+        <svg viewBox="0 0 220 200" aria-hidden="true">
+          <ellipse cx="110" cy="184" rx="80" ry="9" fill="rgba(74,6,19,.2)"/>
+          <g transform="translate(110 152)">
+            <ellipse cy="12" rx="50" ry="16" fill="#5e0918"/><rect x="-48" y="0" width="96" height="10" fill="#800D22"/>
+            <ellipse rx="47" ry="8" fill="#FFF0D8"/><ellipse cy="-6" rx="50" ry="17" fill="#9E1A31"/>
+            <ellipse cx="-14" cy="-12" rx="16" ry="4" fill="#fff" opacity=".18"/>
+          </g>
+          <g transform="translate(108 110) rotate(-6)">
+            <ellipse cy="12" rx="48" ry="15" fill="#e8cfa6"/><rect x="-46" y="0" width="92" height="10" fill="#f3dfbd"/>
+            <ellipse rx="45" ry="8" fill="#9E1A31"/><ellipse cy="-6" rx="48" ry="16" fill="#FFF0D8" stroke="#ecd6b0" stroke-width="1"/>
+            <ellipse cx="-14" cy="-12" rx="15" ry="4" fill="#fff" opacity=".5"/>
+          </g>
+          <g transform="translate(112 70) rotate(5)">
+            <ellipse cy="11" rx="45" ry="14" fill="#a77a33"/><rect x="-43" y="0" width="86" height="9" fill="#C99A4A"/>
+            <ellipse rx="42" ry="7" fill="#FFFAF2"/><ellipse cy="-5" rx="45" ry="15" fill="#E8C987"/>
+            <ellipse cx="-12" cy="-10" rx="14" ry="3.5" fill="#fff" opacity=".4"/>
+          </g>
+          <g fill="#C99A4A"><path d="M30 50 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/><path d="M188 36 l1.5 4.5 4.5 1.5 -4.5 1.5 -1.5 4.5 -1.5 -4.5 -4.5 -1.5 4.5 -1.5z"/></g>
+        </svg>
+      </div><span class="shot-tag"></span></div>
+      <i class="wipe" id="wipe"></i>
+    </div>
+    <p class="show-text" id="showText"></p>
+  </section>
+
+  <!-- ================= ۴) دعوت به حمایت ================= -->
+  <section class="scene" id="sc-cta">
+    <div class="cta-ring" id="ctaRing"></div>
+    <p class="cta-big" id="ctaBig"></p>
+    <div class="acts">
+      <div class="act" id="actLike">
+        <div class="act-beat">
+          <div class="act-ring" id="heartRing"></div>
+          <button class="act-btn" id="heartBtn" aria-label="like">
+            <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.4C.9 8 3.1 4 6.9 4c2.1 0 3.6 1.1 5.1 3 1.5-1.9 3-3 5.1-3 3.8 0 6 4 4.5 7.6C19.5 16.4 12 21 12 21z"/></svg>
+          </button>
+        </div>
+        <span class="act-label" id="likeLabel"></span>
       </div>
-      <p class="intro-text" id="introText"></p>
-      <div class="cta-wrap" id="ctaWrap">
-        <button class="cta" id="startBtn"><span class="cta-label" id="ctaLabel"></span></button>
+      <div class="act" id="actFollow">
+        <div class="act-beat">
+          <div class="act-ring" id="followRing"></div>
+          <button class="act-btn" id="followBtn" aria-label="follow">
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/><path class="ic-plus" d="M19 8v6M16 11h6"/><path class="ic-check" d="M16 11.5l2 2 4-4"/></svg>
+          </button>
+        </div>
+        <span class="act-label" id="followLabel"></span>
       </div>
     </div>
   </section>
 
-  <!-- ================= صحنه ۲: داستان ================= -->
-  <section class="scene" id="sc-story">
-    <div class="chapter ltr" id="chapter"><i></i>cackloris<i></i></div>
-    <div class="story-text" id="storyText"><p class="line" id="storyLine"></p></div>
-    <svg class="road" id="road" viewBox="0 0 200 40" aria-hidden="true">
-      <path id="roadPath" pathLength="1" d="M8 34 C40 34 52 22 78 24 S118 31 134 19 S172 8 190 7" fill="none" stroke="#C99A4A" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="1" stroke-dashoffset="1"/>
-      <circle cx="190" cy="7" r="2.3" fill="#C99A4A"/>
-    </svg>
-    <div class="candle" id="candle">
-      <svg viewBox="0 0 60 110" aria-hidden="true">
-        <defs>
-          <radialGradient id="cGlow"><stop offset="0" stop-color="rgba(255,214,140,.8)"/><stop offset="1" stop-color="rgba(255,214,140,0)"/></radialGradient>
-          <radialGradient id="cFlame"><stop offset="0" stop-color="#fff6d8"/><stop offset=".6" stop-color="#ffcf6b"/><stop offset="1" stop-color="#e98b2a"/></radialGradient>
-        </defs>
-        <circle class="flame-glow" cx="30" cy="24" r="28" fill="url(#cGlow)"/>
-        <path class="flame" d="M30 8 C36 18 38 25 34 31 C32 35 28 35 26 31 C22 25 25 17 30 8z" fill="url(#cFlame)"/>
-        <rect x="24" y="36" width="12" height="52" rx="2.5" fill="#FFFAF2" stroke="#C99A4A" stroke-width="1"/>
-        <path d="M24 46 l12 -6 M24 58 l12 -6 M24 70 l12 -6" stroke="#C99A4A" stroke-width="1.6"/>
-        <ellipse cx="30" cy="94" rx="22" ry="6" fill="#C99A4A"/>
-        <ellipse cx="30" cy="91" rx="20" ry="5" fill="#FFFAF2"/>
-      </svg>
-    </div>
-  </section>
-
-  <!-- ================= صحنه ۳: پیام ================= -->
-  <section class="scene" id="sc-msg">
-    <div class="msg-texts">
-      <div class="msg-group" id="msgG1">
-        <p class="msg-line" id="m1"></p>
-        <p class="msg-line strong" id="m2"></p>
-      </div>
-      <div class="msg-group" id="msgG2">
-        <p class="msg-line strong" id="m3"></p>
-        <p class="msg-line big" id="m4"></p>
-      </div>
-    </div>
-    <div class="heart-wrap" id="heartWrap">
-      <div class="heart-pop" id="heartPop">
-        <div class="heart-ring" id="heartRing"></div>
-        <button class="heart-btn" id="heartBtn" aria-label="like">
-          <svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.4C.9 8 3.1 4 6.9 4c2.1 0 3.6 1.1 5.1 3 1.5-1.9 3-3 5.1-3 3.8 0 6 4 4.5 7.6C19.5 16.4 12 21 12 21z"/></svg>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= صحنه ۴: رونمایی ================= -->
+  <!-- ================= ۵) پایان ================= -->
   <section class="scene" id="sc-reveal">
-    <div class="box-rays" id="boxRays"></div>
+    <div class="rays" id="boxRays"></div>
     <div class="card-pos">
       <div class="card-zoom" id="cardZoom">
         <div class="card" id="card">
@@ -460,7 +408,6 @@ body.clean .snd,body.clean .replay,body.clean .hint{opacity:0!important;pointer-
         </div>
       </div>
     </div>
-    <div class="box-pos"><div class="gbox" id="rBox"></div></div>
     <div class="welcome">
       <p class="brand-name gold" id="brandName"></p>
       <p class="welcome-1" id="w1"></p>
@@ -474,7 +421,13 @@ body.clean .snd,body.clean .replay,body.clean .hint{opacity:0!important;pointer-
   <div class="vignette"></div>
   <div class="zoom-dim" id="zoomDim"></div>
 
-  <button class="snd" id="sndBtn" aria-label="music">
+  <!-- صفحه شروع: فقط برای فعال شدن صدا (جزو کلیپ نیست) -->
+  <div class="gate" id="gate">
+    <button class="play" id="startBtn" aria-label="play"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></button>
+    <p class="gate-t" id="ctaLabel"></p>
+  </div>
+
+  <button class="snd playing" id="sndBtn" aria-label="music">
     <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l4 6M21 9l-4 6"/></svg>
     <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>
   </button>
@@ -487,27 +440,24 @@ body.clean .snd,body.clean .replay,body.clean .hint{opacity:0!important;pointer-
 const LOGO_IMAGE      = "logo.png";            // فایل لوگو
 const LOGO_ROUND      = true;                  // لوگوی گرد
 const INSTAGRAM_IMAGE = "instagram-page.jpg";  // اسکرین‌شات پیج اینستاگرام
-const MUSIC_FILE      = "";                    // مثلاً "music.mp3" — خالی = جعبه‌موزیک داخلی
-const SPEED           = 1;                     // ضریب سرعت کل (۱ = عادی، ۱.۱ = کندتر)
+const MUSIC_FILE      = "";                    // مثلاً "music.mp3" — خالی = موسیقی ریتمیک داخلی (هماهنگ با تصویر)
+const PHOTOS          = [];                    // عکس واقعی برای ۳ نمای معرفی، مثلاً ["cake1.jpg","cake2.jpg","cake3.jpg"]
+const SPEED           = 1;                     // برای هماهنگی با موسیقی داخلی روی ۱ بمونه
 
-/* متن‌ها */
 const TXT = {
-  intro: "یه اتفاق شیرین در راهه...",
-  cta:   "بازش کنیم؟",
-  story: [
-    "ما تازه شروع کردیم...",
-    "شاید شروع کردن تو این روزها آسون نباشه...",
-    "وسط این همه جنگ، گرونی و سختی...",
-    "اما هنوز به رویاهای کوچیکمون امید داریم.",
-    "تصمیم گرفتیم با عشق، دنیا رو یه ذره شیرین‌تر کنیم."
-  ],
-  m1: "ما هنوز اول راهیم...",
-  m2: "ولی خوشحال می‌شیم کنارمون باشی.",
-  m3: "اگه ما رو می‌بینی،",
-  m4: "لایک و فالو یادتون نره 🥲❤️",
-  brand: "cackloris",
-  w1: "به دنیای شیرین ما خوش اومدی ❤️",
-  hint: ""
+  start:  "برای شروع لمس کن",
+  hook1:  "صبر کن!",
+  hook2:  "یه اتفاق خوشمزه در راهه...",
+  open:   "بالاخره شروع کردیم! 🎉",
+  shots:  ["Signature Cakes", "Cupcakes", "Handmade Sweets"],
+  show:   "یه شروع شیرین، با کلی عشق ❤️",
+  cta:    "تو هم کنارمون باش!",
+  like:   "لایک",
+  follow: "فالو",
+  brand:  "cackloris",
+  end:    "به دنیای شیرین ما خوش اومدی ❤️",
+  hint:   "",          // مثلاً "برای دیدن بهتر، روی تصویر بزن"
+  replay: ""           // مثلاً "↻ دوباره" — خالی = دکمه نمایش داده نمی‌شه (کلید R همیشه کار می‌کنه)
 };
 
 /* =====================================================================
@@ -523,13 +473,14 @@ if (LITE) document.documentElement.classList.add('lite');
 const $ = s => document.querySelector(s);
 const stage = $('#stage');
 const EASE = 'cubic-bezier(.22,1,.36,1)';
-const BOUNCE = 'cubic-bezier(.34,1.4,.64,1)';
-let RUN = 0;                 // شناسه اجرا؛ با Replay عوض می‌شه
+const BOUNCE = 'cubic-bezier(.34,1.56,.64,1)';
+let RUN = 0;
 const CANCEL = {};
-let UNIT = 4, SW = 400, SH = 711;
+let UNIT = 4, SW = 400, SH = 711, T0 = 0, hiddenAt = 0;
 const U = () => UNIT;
+const go = p => { p.catch(() => {}); };
 
-/* ساعت قابل توقف: وقتی تب مخفیه، زمان‌بندی داستان هم متوقف می‌شه */
+/* ساعت قابل توقف */
 const Clock = (() => {
   let paused = false; const set = new Set();
   function run(t){ t.start = performance.now(); t.id = setTimeout(() => { set.delete(t); t.res(); }, t.rem); }
@@ -545,7 +496,9 @@ function sleep(ms){
   const id = RUN;
   return Clock.wait(ms * SPEED).then(() => { if (id !== RUN) throw CANCEL; });
 }
-/* انیمیشن WAAPI؛ اگه وسطش Replay بشه، ادامه زنجیره قبلی متوقف می‌شه */
+/* زمان‌بندی مطلق نسبت به شروع کلیپ (هماهنگ با ضرب موسیقی) */
+function at(sec){ return sleep((T0 + sec * 1000 * SPEED - performance.now()) / SPEED); }
+
 function anim(el, kf, o = {}){
   if (!el) return Promise.resolve();
   const id = RUN;
@@ -558,78 +511,58 @@ function anim(el, kf, o = {}){
 }
 function clearEl(el){
   el.getAnimations().forEach(a => a.cancel());
-  el.style.removeProperty('opacity'); el.style.removeProperty('transform'); el.style.removeProperty('filter');
+  el.style.removeProperty('opacity'); el.style.removeProperty('transform');
+}
+function pulse(el, k = 1.1, dur = 260, iterations = 1){
+  return anim(el, [{transform:'scale(1)'}, {transform:`scale(${k})`}, {transform:'scale(1)'}], {duration:dur, iterations, easing:'ease-out', fill:'none', composite:'add'});
+}
+function out(els, dur = 200){
+  els.forEach(el => anim(el, [{opacity:getComputedStyle(el).opacity}, {opacity:0, transform:'scale(.92)'}], {duration:dur, easing:'ease-in'}));
+}
+function punch(el, text, {from = 1.8, dur = 450} = {}){
+  clearEl(el); el.textContent = text;
+  return anim(el, [{opacity:0, transform:`scale(${from})`}, {opacity:1, transform:'scale(.97)', offset:.65}, {opacity:1, transform:'none'}],
+    {duration:dur, easing:'cubic-bezier(.2,.9,.3,1)'});
 }
 
 /* ---------- اندازه صحنه 9:16 ---------- */
 function layout(){
   const W = innerWidth, H = innerHeight;
   let sw, sh;
-  if (W / H < 0.62) { sw = W; sh = H; }
-  else { sh = H; sw = Math.round(H * 9 / 16); }
+  if (W / H < 0.62) { sw = W; sh = H; } else { sh = H; sw = Math.round(H * 9 / 16); }
   SW = sw; SH = sh; UNIT = sw / 100;
   stage.style.setProperty('--sw', sw + 'px');
   stage.style.setProperty('--sh', sh + 'px');
   stage.style.setProperty('--u', UNIT + 'px');
   FX.resize(sw, sh);
 }
-
 function setBg(id){ document.querySelectorAll('.bg').forEach(b => b.classList.toggle('on', b.id === 'bg-' + id)); }
 function setScene(id){
   stage.dataset.scene = id;
   document.querySelectorAll('.scene').forEach(s => s.classList.toggle('active', s.id === 'sc-' + id));
 }
 
-/* ---------- افکت‌های متن (فقط opacity و transform؛ بدون blur) ---------- */
+/* ---------- متن کلمه‌به‌کلمه (فقط opacity/transform) ---------- */
 function splitWords(el, text){
   el.innerHTML = '';
   text.split(' ').forEach((t, i, arr) => {
     const s = document.createElement('span');
     s.className = 'w' + (/^[a-z]/i.test(t) ? ' latin' : '');
-    s.textContent = t;
-    el.appendChild(s);
+    s.textContent = t; el.appendChild(s);
     if (i < arr.length - 1) el.appendChild(document.createTextNode(' '));
   });
   return [...el.querySelectorAll('.w')];
 }
-async function revealWords(el, text, {stagger = 120, dur = 900, y = 2.2, scale = 1} = {}){
+async function revealWords(el, text, {stagger = 70, dur = 420, y = 2.5, scale = 1} = {}){
   clearEl(el);
   const ws = splitWords(el, text), u = U();
   el.style.opacity = '1';
-  ws.forEach((w, i) => anim(w,
-    [{opacity:0, transform:`translate3d(0,${y*u}px,0) scale(${scale})`}, {opacity:1, transform:'none'}],
-    {duration:dur, delay:i * stagger}));
+  ws.forEach((w, i) => anim(w, [{opacity:0, transform:`translate3d(0,${y*u}px,0) scale(${scale})`}, {opacity:1, transform:'none'}], {duration:dur, delay:i * stagger}));
   await sleep((ws.length - 1) * stagger + dur);
 }
-/* تایپ (اتصال حروف فارسی حفظ می‌شه) */
-async function typeText(el, text, speed = 60){
-  clearEl(el);
-  el.style.opacity = '1';
-  el.innerHTML = '';
-  const tn = document.createTextNode(''), caret = document.createElement('span');
-  caret.className = 'caret';
-  el.append(tn, caret);
-  for (const ch of Array.from(text)) {
-    tn.data += ch;
-    await sleep(ch === ' ' ? speed * 1.5 : (/[.،,]/.test(ch) ? speed * 2.5 : speed));
-  }
-  await sleep(500);
-  caret.remove();
-}
-async function hideEl(el, dur = 700){
-  if (!el) return;
-  const from = getComputedStyle(el).opacity;
-  await anim(el, [{opacity:from}, {opacity:0, transform:`translate3d(0,${-U()*1.5}px,0)`}], {duration:dur, easing:'ease-in'});
-  clearEl(el);
-  el.style.opacity = '0';
-}
-function fadeIn(el, dur = 1000, from = {}){
-  clearEl(el);
-  return anim(el, [Object.assign({opacity:0}, from), {opacity:1, transform:'none'}], {duration:dur});
-}
-function flash(color = 'rgba(255,240,210,1)', dur = 1300){
+function flash(color = 'rgba(255,240,210,1)', dur = 600){
   const f = $('#flash'); f.style.background = color;
-  return anim(f, [{opacity:0}, {opacity:1, offset:.25}, {opacity:0}], {duration:dur, easing:'ease-out', fill:'none'});
+  return anim(f, [{opacity:0}, {opacity:1, offset:.15}, {opacity:0}], {duration:dur, easing:'ease-out', fill:'none'});
 }
 function center(el){
   const r = el.getBoundingClientRect(), s = stage.getBoundingClientRect();
@@ -637,30 +570,27 @@ function center(el){
 }
 
 /* =====================================================================
-   سیستم ذرات سبک: یک حلقه، اسپرایت پیش‌رندر، بدون shadowBlur،
-   خودکار متوقف می‌شه وقتی کاری نداره
+   ذرات سبک: یک حلقه، اسپرایت پیش‌رندر، توقف خودکار
    ===================================================================== */
 const FX = (() => {
   const cv = $('#fx'), ctx = cv.getContext('2d');
   let W = 0, H = 0, s = 1, parts = [], mode = 'none', acc = 0, raf = 0, last = 0, hidden = false;
-  const MAX = REDUCED ? 30 : LITE ? 70 : 140;
-  const RATE = {gold:LITE ? 4 : 8, sugar:LITE ? 12 : 22, ash:LITE ? 4 : 7, none:0};
+  const MAX = REDUCED ? 40 : LITE ? 90 : 160;
+  const RATE = LITE ? 4 : 8;
   const HEART = new Path2D('M0 6 C-14 -4 -8 -16 0 -8 C8 -16 14 -4 0 6Z');
+  const CONF = ['#800D22','#C99A4A','#FFF0D8','#E8C987','#9E1A31'];
   const hex = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
-  function sprite(core, edge = core){
+  function sprite(core, edge){
     const c = document.createElement('canvas'); c.width = c.height = 32;
     const g = c.getContext('2d'), a = hex(core), b = hex(edge);
     const gr = g.createRadialGradient(16,16,0,16,16,16);
     gr.addColorStop(0, `rgba(${a},1)`); gr.addColorStop(.3, `rgba(${b},.6)`); gr.addColorStop(1, `rgba(${b},0)`);
     g.fillStyle = gr; g.fillRect(0,0,32,32); return c;
   }
-  const SP = {
-    gold:['#fff3d4','#E8C987','#f7e6bd'].map(c => sprite(c, '#C99A4A')),
-    sugar:[sprite('#ffffff', '#d9bf8f')],
-    ash:[sprite('#e9d6d0', '#8a5a62')]
-  };
+  const SP = ['#fff3d4','#E8C987','#f7e6bd'].map(c => sprite(c, '#C99A4A'));
   const pick = a => a[Math.random() * a.length | 0];
   const rnd = (a, b) => a + Math.random() * (b - a);
+  const scaleN = n => Math.round(n * (LITE ? .5 : 1) * (REDUCED ? .3 : 1));
 
   function resize(w, h){
     const dpr = Math.min(devicePixelRatio || 1, LITE ? 1 : 1.5);
@@ -670,63 +600,60 @@ const FX = (() => {
   }
   function add(p){ if (parts.length < MAX) parts.push(p); }
   function spawn(){
-    if (mode === 'gold') add({k:'dust', img:pick(SP.gold), x:rnd(0,W), y:H + 8, vx:rnd(-6,6)*s, vy:-rnd(14,34)*s, r:rnd(1.4,3.6)*s, life:0, max:rnd(6,10), ph:rnd(0,6)});
-    else if (mode === 'sugar') add({k:'fall', img:SP.sugar[0], x:rnd(0,W), y:-8, vx:rnd(-5,5)*s, vy:rnd(18,38)*s, r:rnd(1.1,2.6)*s, life:0, max:rnd(6,10), ph:rnd(0,6), a:.95});
-    else if (mode === 'ash') add({k:'fall', img:SP.ash[0], x:rnd(0,W), y:-8, vx:rnd(-4,4)*s, vy:rnd(10,20)*s, r:rnd(1,2.2)*s, life:0, max:rnd(8,12), ph:rnd(0,6), a:.45});
-  }
-  /* پاشیدن پودر قند روی کل تصویر */
-  function sift(n = 50){
-    n = Math.round(n * (LITE ? .5 : 1) * (REDUCED ? .3 : 1));
-    for (let i = 0; i < n; i++) add({k:'fall', img:SP.sugar[0], x:rnd(0,W), y:rnd(-10, H*.45), vx:rnd(-6,6)*s, vy:rnd(14,30)*s, r:rnd(1,2.6)*s, life:0, max:rnd(4,7), ph:rnd(0,6), a:.95});
-    kick();
+    add({k:'dust', img:pick(SP), x:rnd(0,W), y:H + 8, vx:rnd(-6,6)*s, vy:-rnd(14,34)*s, r:rnd(1.4,3.6)*s, life:0, max:rnd(6,10), ph:rnd(0,6)});
   }
   function burst(x, y, n = 30, kind = 'spark', spread = 1){
-    n = Math.round(n * (LITE ? .5 : 1) * (REDUCED ? .3 : 1));
+    n = scaleN(n);
     for (let i = 0; i < n; i++) {
-      const a = rnd(0, Math.PI * 2), sp = rnd(60, 240) * spread * s;
-      add({k:kind, img:pick(SP.gold), x, y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp - (kind === 'heart' ? 60*s : 0),
-        r:(kind === 'heart' ? rnd(5,10) : rnd(1.2,2.8)) * s, life:0, max:rnd(1.2,2.4),
-        c:Math.random() < .6 ? '#9E1A31' : '#C99A4A', rot:rnd(-.5,.5), ph:0});
+      const a = rnd(0, Math.PI * 2), sp = rnd(80, 300) * spread * s;
+      const p = {k:kind, x, y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, life:0, max:rnd(1.2,2.2), rot:rnd(-.5,.5), ph:rnd(0,6)};
+      if (kind === 'heart') { p.r = rnd(5,10)*s; p.vy -= 60*s; p.c = Math.random() < .6 ? '#9E1A31' : '#C99A4A'; }
+      else if (kind === 'confetti') { p.r = rnd(3,6)*s; p.vy -= 140*s; p.c = pick(CONF); p.vr = rnd(-8,8); p.max = rnd(1.8,2.8); }
+      else { p.r = rnd(1.2,2.8)*s; p.img = pick(SP); }
+      add(p);
     }
     kick();
   }
   function floatHearts(n = 10){
-    n = Math.round(n * (LITE ? .6 : 1) * (REDUCED ? .3 : 1));
-    for (let i = 0; i < n; i++) Clock.wait(i * 200).then(() => {
-      add({k:'heart', float:1, x:rnd(W*.1, W*.9), y:H + 20, vx:rnd(-12,12)*s, vy:-rnd(60,100)*s,
-        r:rnd(5,11)*s, life:0, max:rnd(5,7.5), c:Math.random() < .65 ? '#9E1A31' : '#C99A4A', rot:rnd(-.4,.4), ph:rnd(0,6)});
+    n = scaleN(n);
+    for (let i = 0; i < n; i++) Clock.wait(i * 160).then(() => {
+      add({k:'heart', float:1, x:rnd(W*.1, W*.9), y:H + 20, vx:rnd(-12,12)*s, vy:-rnd(80,130)*s,
+        r:rnd(5,11)*s, life:0, max:rnd(4,6), c:Math.random() < .65 ? '#9E1A31' : '#C99A4A', rot:rnd(-.4,.4), ph:rnd(0,6)});
       kick();
     });
   }
   function tick(now){
     const dt = Math.min((now - last) / 1000, .05); last = now;
     ctx.clearRect(0, 0, W, H);
-    if (mode !== 'none' && !REDUCED) { acc += RATE[mode] * dt; while (acc >= 1) { acc--; spawn(); } }
+    if (mode === 'gold' && !REDUCED) { acc += RATE * dt; while (acc >= 1) { acc--; spawn(); } }
     for (let i = parts.length - 1; i >= 0; i--) {
       const p = parts[i]; p.life += dt;
       const k = p.life / p.max;
-      if (k >= 1 || p.y < -40 || p.y > H + 40) { parts[i] = parts[parts.length - 1]; parts.pop(); continue; }
+      if (k >= 1 || p.y < -60 || p.y > H + 60) { parts[i] = parts[parts.length - 1]; parts.pop(); continue; }
       p.ph += dt * 2;
       let al;
       if (p.k === 'dust') { p.x += (p.vx + Math.sin(p.ph) * 8 * s) * dt; p.y += p.vy * dt; al = Math.sin(k * Math.PI) * .8; }
-      else if (p.k === 'fall') { p.x += (p.vx + Math.sin(p.ph) * 10 * s) * dt; p.y += p.vy * dt; al = Math.min(1, k * 6) * (1 - k) * p.a; }
       else if (p.float) { p.x += (p.vx + Math.sin(p.ph) * 18 * s) * dt; p.y += p.vy * dt; al = Math.min(1, k * 8) * (1 - k); }
+      else if (p.k === 'confetti') { const d = 1 - 1.8 * dt; p.vx *= d; p.vy = p.vy * d + 170 * s * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.rot += p.vr * dt; al = k < .75 ? 1 : (1 - k) * 4; }
       else { const d = 1 - 2.4 * dt; p.vx *= d; p.vy = p.vy * d + 90 * s * dt; p.x += p.vx * dt; p.y += p.vy * dt; al = 1 - k; }
       ctx.globalAlpha = al > 0 ? al : 0;
       if (p.k === 'heart') {
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot + Math.sin(p.ph) * .2);
         const sc = p.r / 8; ctx.scale(sc, sc); ctx.fillStyle = p.c; ctx.fill(HEART); ctx.restore();
+      } else if (p.k === 'confetti') {
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, Math.cos(p.ph * 3));
+        ctx.fillStyle = p.c; ctx.fillRect(-p.r * .5, -p.r, p.r, p.r * 2); ctx.restore();
       } else {
         const d = p.r * 4; ctx.drawImage(p.img, p.x - d / 2, p.y - d / 2, d, d);
       }
     }
     ctx.globalAlpha = 1;
-    if (!hidden && (parts.length || (mode !== 'none' && !REDUCED))) raf = requestAnimationFrame(tick);
+    if (!hidden && (parts.length || (mode === 'gold' && !REDUCED))) raf = requestAnimationFrame(tick);
     else { raf = 0; if (!parts.length) ctx.clearRect(0, 0, W, H); }
   }
   function kick(){ if (!raf && !hidden) { last = performance.now(); raf = requestAnimationFrame(tick); } }
   return {
-    resize, burst, sift, floatHearts,
+    resize, burst, floatHearts,
     setAmbient(m){ mode = m; acc = 0; kick(); },
     clear(){ parts.length = 0; acc = 0; ctx.clearRect(0, 0, W, H); },
     pause(){ hidden = true; cancelAnimationFrame(raf); raf = 0; },
@@ -735,61 +662,115 @@ const FX = (() => {
 })();
 
 /* =====================================================================
-   موسیقی (فقط بعد از تعامل کاربر)
+   موسیقی ریتمیک ۱۲۰ BPM (هماهنگ با تایم‌لاین تصویر)
    ===================================================================== */
 const Music = (() => {
-  let ctx, master, timer, audioEl, on = false, step = 0, next = 0;
-  const prog = [[60,64,67,72],[57,60,64,69],[53,57,60,65],[55,59,62,67]];
-  const f = m => 440 * Math.pow(2, (m - 69) / 12);
-  function note(m, t, v = .12, d = 2.4, type = 'sine'){
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = type; o.frequency.value = f(m);
-    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + d);
-    o.connect(g); g.connect(master); o.start(t); o.stop(t + d + .1);
+  let ctx, master, bus, timer, audioEl, noiseBuf, t0 = 0, step = 0, muted = false, running = false;
+  const S = 60 / 120 / 4;                                   // یک شانزدهم
+  const CH = [[60,64,67],[55,59,62],[57,60,64],[53,57,60]]; // C G Am F
+  const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+
+  function init(){
+    const AC = window.AudioContext || window.webkitAudioContext;
+    ctx = new AC();
+    master = ctx.createGain(); master.gain.value = muted ? 0 : .85;
+    const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 4;
+    master.connect(comp); comp.connect(ctx.destination);
+    const len = ctx.sampleRate; noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
+    const d = noiseBuf.getChannelData(0); for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
   }
-  function schedule(){
-    if (next < ctx.currentTime) next = ctx.currentTime + .05;
-    while (next < ctx.currentTime + .6) {
-      const ch = prog[Math.floor(step / 8) % 4], i = step % 8, pat = [0,2,1,3,2,1,3,2];
-      note(ch[pat[i]] + 12, next, .07, 2.2);
-      if (i === 0) { note(ch[0] - 12, next, .09, 4, 'triangle'); note(ch[1], next, .03, 4); }
-      next += .42; step++;
+  function env(g, t, v, a, d){ g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(v, .0002), t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); }
+  function tone(m, t, {v = .1, d = .3, type = 'triangle'} = {}){
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.value = hz(m);
+    env(g, t, v, .005, d); o.connect(g); g.connect(bus); o.start(t); o.stop(t + d + .05);
+  }
+  function kick(t, v = 1){
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.setValueAtTime(160, t); o.frequency.exponentialRampToValueAtTime(45, t + .12);
+    env(g, t, v, .002, .3); o.connect(g); g.connect(bus); o.start(t); o.stop(t + .36);
+  }
+  function noise(t, {v = .2, a = .002, d = .05, type = 'highpass', f = 7000, f2 = 0, q = 1} = {}){
+    const s = ctx.createBufferSource(); s.buffer = noiseBuf; s.loop = true;
+    const fl = ctx.createBiquadFilter(); fl.type = type; fl.Q.value = q; fl.frequency.setValueAtTime(f, t);
+    if (f2) fl.frequency.exponentialRampToValueAtTime(f2, t + a + d);
+    const g = ctx.createGain(); env(g, t, v, a, d);
+    s.connect(fl); fl.connect(g); g.connect(bus); s.start(t, Math.random() * .5); s.stop(t + a + d + .05);
+  }
+  const hat = (t, v) => noise(t, {v, d:.035, f:7500});
+  function snare(t, v){ noise(t, {v, d:.13, type:'bandpass', f:1900, q:.8}); tone(50, t, {v:v * .5, d:.08}); }
+  function chord(ch, t){ ch.forEach(m => { tone(m, t, {v:.04, d:.4}); tone(m + 12, t, {v:.022, d:.3, type:'sine'}); }); }
+  function impact(t, k = 1){
+    kick(t, 1.2 * k);
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine';
+    o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(28, t + .9);
+    env(g, t, .7 * k, .005, .9); o.connect(g); g.connect(bus); o.start(t); o.stop(t + 1);
+    noise(t, {v:.45 * k, d:.7, type:'lowpass', f:4000, f2:150});
+  }
+  const whoosh = t => noise(t, {v:.16, a:.25, d:.12, type:'bandpass', f:500, f2:5000, q:1.2});
+  const riser = (t, dur) => noise(t, {v:.22, a:dur, d:.05, type:'bandpass', f:300, f2:6000, q:2});
+  function finale(t){
+    kick(t, 1.2); tone(36, t, {v:.22, d:1.6});
+    [60,64,67,72].forEach(m => tone(m, t, {v:.055, d:2.2}));
+    noise(t, {v:.08, d:1.2, f:6000});
+  }
+  function sched(){
+    if (!bus) return;
+    while (running && t0 + step * S < ctx.currentTime + .3) {
+      const t = t0 + step * S, sec = step * S, i = step % 16, ch = CH[Math.floor(sec / 2) % 4];
+      if (sec >= 14.5) { running = false; clearInterval(timer); break; }
+      if (sec < 2.25) { if (i % 4 === 0) kick(t, .85); if (i % 4 === 2) hat(t, .1); }
+      else if (sec < 3.5) { if (sec >= 2.5 && (sec >= 3 || i % 2 === 0)) snare(t, .06 + (sec - 2.5) * .25); }
+      else {
+        if (i % 4 === 0) kick(t);
+        if (i % 4 === 2) hat(t, .13); else if (i % 2 === 1) hat(t, .04);
+        if (i === 4 || i === 12) snare(t, .3);
+        if (i % 2 === 0) tone(ch[0] - 12, t, {v:.15, d:.2});
+        if (i === 0 || i === 6 || i === 12) chord(ch, t);
+        if (i % 4 === 3) tone(ch[(step >> 2) % 3] + 24, t, {v:.03, d:.18, type:'sine'});
+      }
+      step++;
     }
   }
   function start(){
+    reset();
     if (MUSIC_FILE) {
-      if (!audioEl) { audioEl = new Audio(MUSIC_FILE); audioEl.loop = true; audioEl.volume = .6; }
-      audioEl.play().catch(() => {});
-    } else {
-      try {
-        if (!ctx) {
-          ctx = new (window.AudioContext || window.webkitAudioContext)();
-          master = ctx.createGain(); master.gain.value = 0;
-          const fb = ctx.createDelay(); fb.delayTime.value = .32;
-          const fg = ctx.createGain(); fg.gain.value = .3;
-          master.connect(ctx.destination); master.connect(fb); fb.connect(fg); fg.connect(fb); fg.connect(ctx.destination);
-        }
-        ctx.resume(); next = ctx.currentTime + .1;
-        master.gain.cancelScheduledValues(ctx.currentTime);
-        master.gain.linearRampToValueAtTime(.9, ctx.currentTime + 2);
-        clearInterval(timer); timer = setInterval(schedule, 200);
-      } catch (e) {}
+      if (!audioEl) { audioEl = new Audio(MUSIC_FILE); audioEl.preload = 'auto'; }
+      audioEl.volume = .8; audioEl.muted = muted; audioEl.currentTime = 0;
+      audioEl.play().catch(() => {}); running = true; return;
     }
-    on = true; $('#sndBtn').classList.add('playing');
+    try {
+      if (!ctx) init();
+      ctx.resume();
+      bus = ctx.createGain(); bus.connect(master);
+      t0 = ctx.currentTime + .06; step = 0; running = true;
+      impact(t0); riser(t0 + 2.25, 1.25); impact(t0 + 3.5);
+      [6.5, 7.25, 8].forEach(x => whoosh(t0 + x - .25));
+      impact(t0 + 9, .8); impact(t0 + 11.5); finale(t0 + 14.5);
+      timer = setInterval(sched, 100); sched();
+    } catch (e) {}
   }
-  function stop(){
+  function reset(){
+    clearInterval(timer); running = false;
     if (audioEl) audioEl.pause();
-    if (ctx) { master.gain.linearRampToValueAtTime(0, ctx.currentTime + .6); setTimeout(() => { if (!on) clearInterval(timer); }, 700); }
-    on = false; $('#sndBtn').classList.remove('playing');
+    if (bus) { const b = bus; b.gain.setTargetAtTime(0, ctx.currentTime, .03); setTimeout(() => b.disconnect(), 300); bus = null; }
   }
-  function suspend(){ clearInterval(timer); if (audioEl) audioEl.pause(); if (ctx) ctx.suspend(); }
-  function resume(){ if (!on) return; if (audioEl) audioEl.play().catch(() => {}); if (ctx) { ctx.resume(); clearInterval(timer); timer = setInterval(schedule, 200); } }
-  return {start, stop, suspend, resume, toggle:() => on ? stop() : start(), get on(){ return on; }};
+  function fileEnd(){
+    if (!audioEl || audioEl.paused) return;
+    let v = audioEl.volume; const id = setInterval(() => { v -= .08; if (v <= 0) { clearInterval(id); audioEl.pause(); } else audioEl.volume = v; }, 60);
+  }
+  function setMuted(m){
+    muted = m;
+    if (master) master.gain.setTargetAtTime(m ? 0 : .85, ctx.currentTime, .05);
+    if (audioEl) audioEl.muted = m;
+    $('#sndBtn').classList.toggle('playing', !m);
+  }
+  function suspend(){ if (ctx && ctx.state === 'running') ctx.suspend(); if (audioEl && running) audioEl.pause(); }
+  function resume(){ if (ctx) ctx.resume(); if (audioEl && running) audioEl.play().catch(() => {}); }
+  return {start, reset, fileEnd, setMuted, suspend, resume, get muted(){ return muted; }};
 })();
-let musicWanted = true;
 
 /* =====================================================================
-   جعبه شیرینی (یک‌بار ساخته می‌شه، در دو صحنه استفاده می‌شه)
+   جعبه شیرینی
    ===================================================================== */
 function boxMarkup(id){
   return `<div class="gb-halo"></div><div class="gb-shadow"></div><div class="gb-beam"></div><div class="gb-glow"></div>
@@ -806,211 +787,178 @@ function boxMarkup(id){
   </div>`;
 }
 $('#iBox').innerHTML = boxMarkup('i');
-$('#rBox').innerHTML = boxMarkup('r');
+const SHAKE = [{transform:'rotate(0)'},{transform:'rotate(-4deg)'},{transform:'rotate(4deg)'},{transform:'rotate(-3deg)'},{transform:'rotate(2deg)'},{transform:'rotate(0)'}];
 
-const SHAKE = [{transform:'rotate(0)'},{transform:'rotate(-3deg)'},{transform:'rotate(3deg)'},{transform:'rotate(-2deg)'},{transform:'rotate(1.5deg)'},{transform:'rotate(0)'}];
-
-/* باز شدن سینمایی در جعبه */
-async function openLid(box){
+function openLid(box){
   const u = U(), q = s => box.querySelector(s);
-  anim(q('.gb-seam'), [{opacity:.5}, {opacity:1}], {duration:400});
-  anim(q('.gb-glow'), [{opacity:0}, {opacity:1}], {duration:700});
+  anim(q('.gb-glow'), [{opacity:0}, {opacity:1}], {duration:350});
   anim(q('.gb-lid'), [
     {transform:'none'},
-    {transform:`translate(${-u*4}px,${-u*22}px) rotate(-26deg)`, offset:.45},
-    {transform:`translate(${-u*58}px,${u*26}px) rotate(-75deg)`, opacity:0}], {duration:1500, easing:'cubic-bezier(.5,0,.3,1)'});
-  await sleep(300);
-  anim(q('.gb-beam'), [{opacity:0, transform:'scaleY(.2)'}, {opacity:1, transform:'scaleY(1)'}], {duration:900});
+    {transform:`translate(${-u*4}px,${-u*24}px) rotate(-28deg)`, offset:.4},
+    {transform:`translate(${-u*60}px,${u*24}px) rotate(-80deg)`, opacity:0}], {duration:1000, easing:'cubic-bezier(.4,0,.3,1)'});
+  anim(q('.gb-beam'), [{opacity:0, transform:'scaleY(.2)'}, {opacity:1, transform:'scaleY(1)'}], {duration:500});
   const c = center(q('.gb-seam'));
-  FX.burst(c.x, c.y, 70, 'spark', 1.4); FX.burst(c.x, c.y, 10, 'heart', 1);
-  flash('rgba(255,236,196,.85)', 1200);
+  FX.burst(c.x, c.y, 60, 'spark', 1.4);
+  flash('rgba(255,236,196,.9)', 650);
 }
 
 /* =====================================================================
-   صحنه ۱: شروع — جذب در سه ثانیه اول
+   ۱) شروع انفجاری — 0 تا 2.25 ثانیه
    ===================================================================== */
-async function sceneIntro(){
-  setScene('intro'); setBg('intro'); FX.setAmbient(LITE ? 'none' : 'gold');
-  const u = U(), box = $('#iBox');
-  anim($('#iBoxWrap'), [{opacity:0, transform:`translate3d(0,${u*10}px,0) scale(.86)`}, {opacity:1, transform:'none'}], {duration:1100, easing:BOUNCE});
-  anim($('#brandTop'), [{opacity:0, transform:`translate3d(0,${-u*2}px,0)`}, {opacity:1, transform:'none'}], {duration:1100, delay:200});
-  await sleep(650);
+async function sceneHook(){
+  setScene('hook'); setBg('intro'); FX.setAmbient('none');
+  await at(0);
+  flash('rgba(255,240,214,1)', 550);
+  anim($('#shock'), [{opacity:.95, transform:'scale(.05)'}, {opacity:0, transform:'scale(1.6)'}], {duration:700, easing:'cubic-bezier(.1,.7,.3,1)'});
+  anim($('#slash1'), [{opacity:1, transform:'translate3d(-100%,0,0) rotate(-9deg)'}, {opacity:0, transform:'translate3d(100%,0,0) rotate(-9deg)'}], {duration:520, easing:'cubic-bezier(.6,0,.2,1)'});
+  anim($('#slash2'), [{opacity:1, transform:'translate3d(100%,0,0) rotate(-9deg)'}, {opacity:0, transform:'translate3d(-100%,0,0) rotate(-9deg)'}], {duration:520, delay:90, easing:'cubic-bezier(.6,0,.2,1)'});
+  anim($('#hookInner'), [{transform:'scale(1)'}, {transform:'scale(1.07)'}], {duration:2250, easing:'linear'});
+  punch($('#hook1'), TXT.hook1, {from:2.4, dur:480});
+  FX.burst(SW / 2, SH * .45, 30, 'spark', 1.3);
+  await at(.6);
+  go(revealWords($('#hook2'), TXT.hook2, {stagger:65, dur:420}));
+  await at(1.0); pulse($('#hook1'));
+  await at(1.5); pulse($('#hook1'));
+  await at(2.05);
+  anim($('#hookInner'), [{opacity:1, transform:'scale(1.07)'}, {opacity:0, transform:'scale(1.35)'}], {duration:200, easing:'ease-in'});
+}
+
+/* =====================================================================
+   ۲) اوج هیجان: جعبه، باز شدن، لوگو — 2.25 تا 6.5
+   ===================================================================== */
+async function sceneOpen(){
+  await at(2.25);
+  setScene('open'); setBg('intro'); FX.setAmbient(LITE ? 'none' : 'gold');
+  const u = U(), wrap = $('#iBoxWrap'), box = $('#iBox');
+  anim(wrap, [
+    {opacity:1, transform:`translate3d(0,${-SH*.7}px,0)`},
+    {opacity:1, transform:`translate3d(0,${u}px,0) scale(1.06,.92)`, offset:.72},
+    {opacity:1, transform:'none'}], {duration:520, easing:'cubic-bezier(.5,0,.5,1)'});
+  await at(2.65);
   box.classList.add('lit');
-  const c = center(box.querySelector('.gb-seam')); FX.burst(c.x, c.y, 20, 'spark', .6);
-  await sleep(250);
-  await revealWords($('#introText'), TXT.intro, {stagger:110, dur:800});
-  await anim($('#ctaWrap'), [{opacity:0, transform:`translate3d(0,${u*3}px,0) scale(.92)`}, {opacity:1, transform:'none'}], {duration:800, easing:BOUNCE});
-  $('#ctaWrap').classList.add('ready');
-  box.classList.add('idle');
-}
-
-/* با کلیک: لرزش، باز شدن در، زوم به داخل جعبه */
-async function openIntro(){
-  const u = U(), box = $('#iBox');
-  anim($('#ctaWrap'), [{opacity:1}, {opacity:0, transform:`translate3d(0,${u*3}px,0)`}], {duration:450});
-  hideEl($('#introText'), 450);
-  box.classList.remove('idle');
-  if (!REDUCED) await anim(box, SHAKE, {duration:600, easing:'ease-in-out'});
-  await openLid(box);
-  await sleep(650);
-  const st = $('#introStage'), bc = center(box), sr = st.getBoundingClientRect(), gr = stage.getBoundingClientRect();
-  st.style.transformOrigin = `${bc.x - (sr.left - gr.left)}px ${bc.y - (sr.top - gr.top)}px`;
-  anim(st, [{transform:'none', opacity:1}, {transform:'scale(2.6)', opacity:0}], {duration:1200, easing:'cubic-bezier(.7,0,.3,1)'});
-  anim($('#brandTop'), [{opacity:1}, {opacity:0}], {duration:600});
-  await sleep(600);
-  flash('rgba(255,244,224,1)', 1300);
-  await sleep(350);
-}
-
-/* =====================================================================
-   کیک مشترک
-   ===================================================================== */
-const cakeEl = $('#cakeLayer');
-const CAKE_Y1 = () => SH * .43, CAKE_Y2 = () => SH * .12;
-function cakeEnter(){
-  const u = U(), y = CAKE_Y1();
-  return anim(cakeEl, [
-    {opacity:0, transform:`translate3d(0,${y + u*26}px,0) scale(.84)`},
-    {opacity:1, transform:`translate3d(0,${y - u*1.5}px,0) scale(1.02)`, offset:.7},
-    {opacity:1, transform:`translate3d(0,${y}px,0) scale(1)`}], {duration:1700});
-}
-function cakeToMsg(){
-  return anim(cakeEl, [{opacity:1, transform:`translate3d(0,${CAKE_Y1()}px,0) scale(1)`},
-    {opacity:1, transform:`translate3d(0,${CAKE_Y2()}px,0) scale(.86)`}], {duration:1400});
-}
-function cakeExit(){
-  const y = CAKE_Y2();
-  return anim(cakeEl, [{opacity:1, transform:`translate3d(0,${y}px,0) scale(.86)`},
-    {opacity:0, transform:`translate3d(0,${y - U()*4}px,0) scale(.92)`}], {duration:900, easing:'ease-in'});
+  const b = center(wrap); FX.burst(b.x, b.y + u*24, 14, 'spark', .5);
+  await at(2.9);  anim(box, SHAKE, {duration:450, easing:'ease-in-out', fill:'none'});
+  await at(3.2);  anim(box, SHAKE, {duration:280, easing:'ease-in-out', fill:'none'});
+  await at(3.5);
+  openLid(box);
+  anim($('#openRays'), [{opacity:0, transform:'scale(.4)'}, {opacity:1, transform:'scale(1)'}], {duration:900});
+  await at(3.65);
+  const dy = center(wrap).y - center($('#logoPop')).y;
+  anim($('#logoPop'), [
+    {opacity:0, transform:`translate3d(0,${dy}px,0) scale(.2) rotate(-25deg)`},
+    {opacity:1, transform:`translate3d(0,${-u*2}px,0) scale(1.08) rotate(3deg)`, offset:.7},
+    {opacity:1, transform:'none'}], {duration:800});
+  await at(4.3);
+  box.classList.remove('lit');
+  anim(wrap, [{opacity:1, transform:'none'}, {opacity:0, transform:`translate3d(0,${u*22}px,0) scale(.9)`}], {duration:350, easing:'ease-in'});
+  await at(4.5);
+  punch($('#openText'), TXT.open, {from:1.6, dur:450});
+  anim($('#openLine'), [{opacity:0, transform:'scaleX(0)'}, {opacity:1, transform:'scaleX(1)'}], {duration:500, delay:150});
+  FX.burst(SW * .12, SH * .28, 40, 'confetti', 1.1);
+  FX.burst(SW * .88, SH * .28, 40, 'confetti', 1.1);
+  pulse($('#logoPop'), 1.06, 300);
+  await at(5.5); pulse($('#logoPop'), 1.05, 300); pulse($('#openText'), 1.05, 300);
+  await at(6.2);
+  out([$('#logoPop'), $('#openText'), $('#openLine'), $('#openRays')], 250);
 }
 
 /* =====================================================================
-   صحنه ۲: داستان تصویری (هر جمله = یک اتفاق بصری)
+   ۳) معرفی برند: سه نمای سریع — 6.5 تا 9
    ===================================================================== */
-async function sceneStory(){
-  setBg('story'); setScene('story');
-  const st = $('#sc-story'), L = $('#storyLine'), u = U();
-
-  // ۱) شروع: پاشیده شدن پودر قند
-  FX.setAmbient('sugar'); FX.sift(55);
-  await sleep(400);
-  fadeIn($('#chapter'), 1200, {transform:`translate3d(0,${-u*2}px,0)`});
-  await sleep(300);
-  await typeText(L, TXT.story[0], 55);
-  await sleep(1500);
-  await hideEl(L);
-
-  // ۲) سختی: نور کم‌رمق می‌شه، مسیری ناهموار کشیده می‌شه
-  setBg('dim'); stage.classList.add('dark'); FX.setAmbient('none');
-  fadeIn($('#road'), 600);
-  anim($('#roadPath'), [{strokeDashoffset:1}, {strokeDashoffset:0}], {duration:2400, easing:'ease-in-out'});
-  await revealWords(L, TXT.story[1], {stagger:110, dur:900});
-  await sleep(1900);
-  hideEl($('#road'));
-  await hideEl(L);
-
-  // ۳) شب: تاریکی، خاکستر آرام، اما یک شمع کوچک روشن می‌مونه
-  setBg('night'); st.classList.add('night'); FX.setAmbient('ash');
-  await sleep(450);
-  fadeIn($('#candle'), 1400, {transform:`translate3d(0,${u*3}px,0) scale(.85)`});
-  await typeText(L, TXT.story[2], 62);
-  await sleep(1700);
-  await hideEl(L);
-
-  // ۴) امید: نور طلایی از شمع پخش می‌شه
-  st.classList.remove('night'); setBg('dawn'); stage.classList.remove('dark'); FX.setAmbient('gold');
-  anim($('#warm'), [{opacity:0, transform:'scale(.3)'}, {opacity:1, transform:'scale(1)'}], {duration:2200, easing:'ease-out'});
-  const cc = center($('#candle')); FX.burst(cc.x, cc.y - u*6, 22, 'spark', .6);
-  await sleep(350);
-  await revealWords(L, TXT.story[3], {stagger:120, dur:1100, y:3, scale:.92});
-  await sleep(2000);
-  hideEl($('#candle'), 800);
-  await hideEl(L);
-
-  // ۵) کیک به شکل سینمایی وارد می‌شه
-  $('#storyText').classList.add('up'); L.classList.add('glow');
-  cakeEnter();
-  await sleep(700);
-  await revealWords(L, TXT.story[4], {stagger:115, dur:1000});
-  const kc = center(cakeEl); FX.burst(kc.x, kc.y - u*10, 28, 'spark', .8); FX.floatHearts(8);
-  await sleep(2400);
-  hideEl($('#chapter'), 600);
-  anim($('#warm'), [{opacity:1}, {opacity:0}], {duration:1000});
-  await hideEl(L);
-  L.classList.remove('glow'); $('#storyText').classList.remove('up');
+async function sceneShow(){
+  await at(6.5);
+  setScene('show'); setBg('show'); FX.setAmbient('none');
+  const shots = [...document.querySelectorAll('.shot')], times = [6.5, 7.25, 8.0];
+  anim($('#shots'), [{opacity:0, transform:'scale(.9)'}, {opacity:1, transform:'none'}], {duration:320});
+  for (let k = 0; k < shots.length; k++) {
+    await at(times[k]);
+    const s = shots[k], prev = shots[k - 1];
+    anim(s, [{opacity:1, transform:'translate3d(-105%,0,0) scale(1.05)'}, {opacity:1, transform:'none'}], {duration:420});
+    anim(s.querySelector('.shot-art'), [{transform:'scale(1.15)'}, {transform:'scale(1)'}], {duration:1100, easing:'ease-out'});
+    anim(s.querySelector('.shot-tag'), [{opacity:0, transform:`translate3d(0,${U()*3}px,0)`}, {opacity:1, transform:'none'}], {duration:320, delay:200});
+    if (prev) anim(prev, [{opacity:1, transform:'none'}, {opacity:0, transform:'translate3d(30%,0,0) scale(.9)'}], {duration:420});
+    anim($('#wipe'), [{opacity:1, transform:'translate3d(-120%,0,0) skewX(-14deg)'}, {opacity:1, transform:'translate3d(560%,0,0) skewX(-14deg)'}], {duration:450, easing:'cubic-bezier(.6,0,.3,1)'});
+    if (k === 0) { await at(6.75); go(revealWords($('#showText'), TXT.show, {stagger:60, dur:420})); }
+  }
+  await at(8.25); pulse($('#showText'), 1.05, 300);
+  await at(8.8);
+  out([$('#shots'), $('#showText')], 180);
 }
 
 /* =====================================================================
-   صحنه ۳: پیام صمیمی
+   ۴) دعوت به حمایت — 9 تا 11.5
    ===================================================================== */
-async function sceneMsg(){
-  setBg('light'); setScene('msg'); FX.setAmbient(LITE ? 'none' : 'gold');
-  await cakeToMsg();
-  const kc = center(cakeEl); FX.burst(kc.x, kc.y - U()*8, 18, 'spark', .6);
-  await revealWords($('#m1'), TXT.m1, {stagger:130, dur:900});
-  await sleep(400);
-  await revealWords($('#m2'), TXT.m2, {stagger:120, dur:900});
-  await sleep(2100);
-  await hideEl($('#msgG1'));
-  await anim($('#heartWrap'), [{opacity:0}, {opacity:1}], {duration:300});
-  await anim($('#heartPop'), [{transform:'scale(0)'}, {transform:'scale(1)'}], {duration:650, easing:'cubic-bezier(.34,1.56,.64,1)'});
-  await sleep(450);
-  likeHeart();
-  await sleep(450);
-  await revealWords($('#m3'), TXT.m3, {stagger:140, dur:900});
-  await revealWords($('#m4'), TXT.m4, {stagger:160, dur:1000, y:3, scale:1.15});
-  anim($('#m4'), [{transform:'scale(1)'}, {transform:'scale(1.05)'}, {transform:'scale(1)'}], {duration:900, iterations:2, fill:'none'});
-  await sleep(2700);
-  cakeExit(); hideEl($('#msgG2')); await hideEl($('#heartWrap'));
+async function sceneCta(){
+  await at(9.0);
+  setScene('cta'); setBg('light'); FX.setAmbient('none');
+  flash('rgba(255,255,255,1)', 300);
+  punch($('#ctaBig'), TXT.cta, {from:1.9, dur:450});
+  anim($('#ctaRing'), [{opacity:.6, transform:'scale(.1)'}, {opacity:0, transform:'scale(1.5)'}], {duration:650, easing:'cubic-bezier(.1,.7,.3,1)'});
+  await at(9.5);
+  anim($('#actLike'), [{opacity:0, transform:'scale(0)'}, {opacity:1, transform:'none'}], {duration:380, easing:BOUNCE});
+  await at(9.75);
+  anim($('#actFollow'), [{opacity:0, transform:'scale(0)'}, {opacity:1, transform:'none'}], {duration:380, easing:BOUNCE});
+  await at(10.0);
+  document.querySelectorAll('.act-beat').forEach(el => pulse(el, 1.12, 500, 3));
+  pulse($('#ctaBig'), 1.05, 300);
+  await at(10.5); likeHeart();
+  await at(11.0); followIt(); pulse($('#ctaBig'), 1.05, 300);
+  await at(11.35);
+  out([$('#ctaBig'), $('#actLike'), $('#actFollow')], 150);
 }
 function likeHeart(){
   const b = $('#heartBtn');
   b.classList.add('liked');
-  anim(b, [{transform:'scale(1)'}, {transform:'scale(1.25)'}, {transform:'scale(1)'}], {duration:550, easing:'cubic-bezier(.34,1.56,.64,1)', fill:'none'});
-  anim($('#heartRing'), [{opacity:.9, transform:'scale(1)'}, {opacity:0, transform:'scale(2.1)'}], {duration:850, fill:'none'});
-  const c = center(b); FX.burst(c.x, c.y, 14, 'heart', 1); FX.burst(c.x, c.y, 22, 'spark', 1);
+  anim(b, [{transform:'scale(1)'}, {transform:'scale(1.25)'}, {transform:'scale(1)'}], {duration:450, easing:BOUNCE, fill:'none'});
+  anim($('#heartRing'), [{opacity:.9, transform:'scale(1)'}, {opacity:0, transform:'scale(2.1)'}], {duration:700, fill:'none'});
+  const c = center(b); FX.burst(c.x, c.y, 14, 'heart', 1); FX.burst(c.x, c.y, 18, 'spark', 1);
+}
+function followIt(){
+  const b = $('#followBtn');
+  b.classList.add('followed');
+  anim(b, [{transform:'scale(1)'}, {transform:'scale(1.25)'}, {transform:'scale(1)'}], {duration:450, easing:BOUNCE, fill:'none'});
+  anim($('#followRing'), [{opacity:.9, transform:'scale(1)'}, {opacity:0, transform:'scale(2.1)'}], {duration:700, fill:'none'});
+  const c = center(b); FX.burst(c.x, c.y, 22, 'spark', 1);
 }
 
 /* =====================================================================
-   صحنه ۴: رونمایی نهایی
+   ۵) پایان: پیج اینستاگرام — 11.5 تا 15
    ===================================================================== */
 let cardReady = false;
 async function sceneReveal(){
-  setBg('reveal'); setScene('reveal'); FX.setAmbient(LITE ? 'none' : 'gold');
-  const u = U(), box = $('#rBox');
-  await sleep(600);
-  await anim(box,[{opacity:0, transform:`translate3d(0,${u*30}px,0) scale(.8)`}, {opacity:1, transform:'none'}], {duration:1300, easing:BOUNCE});
-  box.classList.add('lit');
-  await sleep(300);
-  if (!REDUCED) await anim(box, SHAKE, {duration:700, easing:'ease-in-out'});
-  await openLid(box);
-  anim($('#boxRays'), [{opacity:0, transform:'scale(.5)'}, {opacity:1, transform:'scale(1)'}], {duration:1800});
-  await sleep(250);
-  // کارت اینستاگرام از دل جعبه بالا میاد
+  await at(11.5);
+  setScene('reveal'); setBg('reveal'); FX.setAmbient(LITE ? 'none' : 'gold');
+  const u = U();
+  flash('rgba(255,236,196,.9)', 500);
+  anim($('#boxRays'), [{opacity:0, transform:'scale(.4)'}, {opacity:1, transform:'scale(1)'}], {duration:900});
   anim($('#card'), [
-    {opacity:0, transform:`translate3d(0,${u*36}px,0) scale(.3)`},
-    {opacity:1, transform:`translate3d(0,${-u*2}px,0) scale(1.03)`, offset:.7},
-    {opacity:1, transform:'none'}], {duration:1900});
-  await sleep(1100);
-  box.classList.remove('lit');
-  anim(box, [{opacity:1, transform:'none'}, {opacity:0, transform:`translate3d(0,${u*26}px,0) scale(.85)`}], {duration:1300, easing:'ease-in'});
-  await sleep(700);
+    {opacity:0, transform:`translate3d(0,${u*20}px,0) scale(.6)`},
+    {opacity:1, transform:'scale(1.03)', offset:.7},
+    {opacity:1, transform:'none'}], {duration:700});
+  await at(11.8);
+  const cc = center($('#card')); FX.burst(cc.x, cc.y, 40, 'spark', 1.2);
+  await at(12.0);
   $('#card').classList.add('shine');
-  await revealWords($('#brandName'), TXT.brand, {stagger:0, dur:1000, y:2, scale:.9});
-  await revealWords($('#w1'), TXT.w1, {stagger:120, dur:900});
-  FX.floatHearts(10);
-  await sleep(900);
-  // تأکید نهایی: کارت کمی بزرگ می‌شه + حلقه طلایی
-  await anim($('#card'), [{transform:'none'}, {transform:'scale(1.07)'}], {duration:1200});
-  anim($('#cardRing'), [{opacity:.9, transform:'scale(1)'}, {opacity:0, transform:'scale(1.12)'}], {duration:1300, iterations:2, fill:'none'});
-  const cc = center($('#card')); FX.burst(cc.x, cc.y, 30, 'spark', 1.1);
+  go(revealWords($('#brandName'), TXT.brand, {stagger:0, dur:500, y:2, scale:.8}));
+  await at(12.5);
+  go(revealWords($('#w1'), TXT.end, {stagger:60, dur:400}));
+  await at(12.6);
+  anim($('#card'), [{transform:'none'}, {transform:'scale(1.07)'}], {duration:2400, easing:'ease-in-out'});
   cardReady = true;
-  $('#hint').textContent = TXT.hint;
-  anim($('#hint'), [{opacity:0}, {opacity:1}], {duration:800});
-  await sleep(1500);
+  await at(13.0);
+  anim($('#cardRing'), 9,[{ transform:'scale(1)'}, {opacity:0, transform:'scale(1.1)'}], {duration:900, iterations:2, fill:'none'});
+  await at(13.5); FX.floatHearts(8);
+  await at(14.5);
+  const c2 = center($('#card')); FX.burst(c2.x, c2.y, 30, 'spark', 1.1);
+  if (MUSIC_FILE) Music.fileEnd();
+  if (TXT.hint) { $('#hint').textContent = TXT.hint; anim($('#hint'), [{opacity:0}, {opacity:1}], {duration:400}); }
+  await at(15.2);
   FX.setAmbient('none');
-  await anim($('#replayBtn'), [{opacity:0}, {opacity:1}], {duration:800});
-  $('#replayBtn').classList.add('ready');
+  if (TXT.replay) {
+    $('#replayBtn').textContent = TXT.replay;
+    await anim($('#replayBtn'), [{opacity:0}, {opacity:1}], {duration:400});
+    $('#replayBtn').classList.add('ready');
+  }
 }
 
 /* ---------- زوم نرم عکس پیج (تمام صفحه را نمی‌گیرد) ---------- */
@@ -1033,75 +981,59 @@ $('#zoomDim').addEventListener('click', () => setZoom(false));
    ===================================================================== */
 async function playStory(){
   try {
-    await openIntro();
-    await sceneStory();
-    await sceneMsg();
+    await sceneHook();
+    await sceneOpen();
+    await sceneShow();
+    await sceneCta();
     await sceneReveal();
   } catch (e) { if (e !== CANCEL) console.warn(e); }
 }
 
-/* ریست کامل برای اجرای مجدد */
 function resetAll(){
   RUN++;
   Clock.clear();
+  Music.reset();
   stage.getAnimations({subtree:true}).forEach(a => {
     const css = (typeof CSSAnimation !== 'undefined' && a instanceof CSSAnimation) || (typeof CSSTransition !== 'undefined' && a instanceof CSSTransition);
     if (!css) a.cancel();
   });
-  ['#introText','#storyLine','#m1','#m2','#m3','#m4','#brandName','#w1','#hint'].forEach(s => { const e = $(s); e.innerHTML = ''; clearEl(e); });
-  ['#introStage','#brandTop','#iBoxWrap','#ctaWrap','#chapter','#road','#roadPath','#candle','#warm','#cakeLayer',
-   '#msgG1','#msgG2','#heartWrap','#heartPop','#heartBtn','#card','#cardRing','#boxRays','#replayBtn','#flash']
-    .forEach(s => clearEl($(s)));
-  document.querySelectorAll('.gbox, .gbox *').forEach(clearEl);
-  $('#introStage').style.removeProperty('transform-origin');
-  ['#iBox','#rBox'].forEach(s => $(s).classList.remove('lit','idle'));
+  ['#hook1','#hook2','#openText','#showText','#ctaBig','#brandName','#w1','#hint'].forEach(s => { const e = $(s); e.innerHTML = ''; clearEl(e); });
+  stage.querySelectorAll('.scene *, #flash').forEach(el => { el.style.removeProperty('opacity'); el.style.removeProperty('transform'); });
+  $('#iBox').classList.remove('lit');
   $('#heartBtn').classList.remove('liked');
+  $('#followBtn').classList.remove('followed');
   $('#card').classList.remove('shine');
-  $('#sc-story').classList.remove('night');
-  $('#storyLine').classList.remove('glow');
-  $('#storyText').classList.remove('up');
-  $('#ctaWrap').classList.remove('ready');
   $('#replayBtn').classList.remove('ready');
-  stage.classList.remove('dark','zoomed');
+  stage.classList.remove('zoomed');
   cardReady = false;
-  FX.clear();
+  FX.clear(); FX.setAmbient('none');
+}
+
+function startClip(){
+  resetAll();
+  $('#gate').classList.add('off');
+  Music.start();
+  T0 = performance.now();
+  playStory();
 }
 
 let started = false;
-$('#startBtn').addEventListener('click', e => {
-  if (started) return; started = true;
-  const btn = e.currentTarget, r = btn.getBoundingClientRect();
-  const rp = document.createElement('span'); rp.className = 'ripple';
-  const size = Math.max(r.width, r.height) * 2;
-  rp.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - r.left - size/2}px;top:${e.clientY - r.top - size/2}px`;
-  btn.appendChild(rp);
-  rp.animate([{transform:'scale(0)', opacity:.8}, {transform:'scale(1)', opacity:0}], {duration:650, easing:'ease-out'}).onfinish = () => rp.remove();
-  if (musicWanted) Music.start();
-  $('#ctaWrap').classList.remove('ready');
-  playStory();
-});
-
-$('#replayBtn').addEventListener('click', () => {
-  if (!$('#replayBtn').classList.contains('ready')) return;
-  resetAll();
-  flash('rgba(255,240,216,1)', 1200);
-  started = false;
-  sceneIntro().catch(() => {});
-});
-
+$('#startBtn').addEventListener('click', () => { if (started) return; started = true; startClip(); });
+$('#replayBtn').addEventListener('click', () => { if ($('#replayBtn').classList.contains('ready')) startClip(); });
 $('#heartBtn').addEventListener('click', likeHeart);
-$('#sndBtn').addEventListener('click', e => { e.stopPropagation(); Music.toggle(); musicWanted = Music.on; });
+$('#followBtn').addEventListener('click', followIt);
+$('#sndBtn').addEventListener('click', e => { e.stopPropagation(); Music.setMuted(!Music.muted); });
 
-/* کلیدهای میانبر: H = حالت فیلم‌برداری تمیز، R = اجرای مجدد، M = صدا، Esc = بستن زوم */
+/* کلیدها: H = ضبط تمیز، R = اجرای مجدد، M = صدا، Esc = بستن زوم */
 addEventListener('keydown', e => {
   const k = (e.key || '').toLowerCase();
   if (k === 'h') document.body.classList.toggle('clean');
-  if (k === 'r') { $('#replayBtn').classList.add('ready'); $('#replayBtn').click(); }
+  if (k === 'r') { started = true; startClip(); }
   if (k === 'm') $('#sndBtn').click();
   if (k === 'escape') setZoom(false);
 });
 
-/* ---------- پارالاکس سبک (فقط دسکتاپ با ماوس؛ بدون حلقه دائمی) ---------- */
+/* ---------- پارالاکس سبک (فقط دسکتاپ) ---------- */
 if (matchMedia('(hover:hover) and (pointer:fine)').matches && !REDUCED) {
   const els = [...document.querySelectorAll('.px')];
   let tx = 0, ty = 0, pending = false;
@@ -1124,16 +1056,26 @@ if (matchMedia('(hover:hover) and (pointer:fine)').matches && !REDUCED) {
   const ii = $('#instaImg');
   ii.onerror = () => { ii.style.display = 'none'; $('#instaFallback').style.display = 'flex'; };
   ii.src = INSTAGRAM_IMAGE;
+  document.querySelectorAll('.shot').forEach((s, i) => {
+    s.querySelector('.shot-tag').textContent = TXT.shots[i] || '';
+    if (!PHOTOS[i]) return;
+    const im = new Image(); im.className = 'shot-photo'; im.decoding = 'async'; im.alt = '';
+    im.onload = () => { s.querySelector('.shot-art').prepend(im); s.classList.add('has-photo'); };
+    im.src = PHOTOS[i];
+  });
 })();
 
-/* ---------- توقف همه‌چیز وقتی تب مخفی است ---------- */
+/* ---------- توقف کامل وقتی تب مخفی است ---------- */
 let pausedAnims = [];
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
+    hiddenAt = performance.now();
     Clock.pause(); FX.pause(); Music.suspend();
     pausedAnims = document.getAnimations().filter(a => a.playState === 'running');
     pausedAnims.forEach(a => a.pause());
   } else {
+    if (hiddenAt) T0 += performance.now() - hiddenAt;   // زمان‌بندی مطلق هم جابه‌جا می‌شه
+    hiddenAt = 0;
     pausedAnims.forEach(a => { try { a.play(); } catch (e) {} }); pausedAnims = [];
     Clock.resume(); FX.resume(); Music.resume();
   }
@@ -1142,9 +1084,11 @@ document.addEventListener('visibilitychange', () => {
 /* ---------- شروع ---------- */
 let rzT = 0;
 addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { layout(); if (stage.classList.contains('zoomed')) setZoom(true); }, 150); });
-$('#ctaLabel').textContent = TXT.cta;
+$('#ctaLabel').textContent = TXT.start;
+$('#likeLabel').textContent = TXT.like;
+$('#followLabel').textContent = TXT.follow;
+setScene('hook'); setBg('intro');
 layout();
-sceneIntro().catch(() => {});
 </script>
 </body>
 </html>
